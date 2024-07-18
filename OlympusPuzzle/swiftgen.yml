@@ -1,0 +1,27 @@
+## String ##
+ strings:
+  inputs:
+     - OlympusPuzzle/Strings/en.lproj
+  outputs:
+     - templateName: structured-swift5
+       output: OlympusPuzzle/Generated/Strings+Generated.swift
+       params:
+         enumName: L10n
+
+## Assets ##
+ xcassets:
+   inputs:
+     - OlympusPuzzle/Resources/Assets.xcassets
+   outputs:
+     - templateName: swift5
+       params:
+         forceProvidesNamespaces: true
+       output: OlympusPuzzle/Generated/XCAssets+Generated.swift
+
+## Fonts ##
+ fonts:
+  inputs:
+     - OlympusPuzzle/Fonts
+  outputs:
+     - templateName: swift5
+       output: OlympusPuzzle/Generated/Fonts+Generated.swift
