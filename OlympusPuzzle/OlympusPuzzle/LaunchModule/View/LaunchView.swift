@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LaunchView: View {
     // MARK: - Property -
+    @StateObject private var viewModel = LaunchViewModel()
     
     // MARK: - Body -
     var body: some View {
@@ -23,6 +24,10 @@ struct LaunchView: View {
                 Image(.logoName)
                     .padding(.horizontal, 16)
                     .offset(y: 60)
+                    .scaleEffect(viewModel.pulse ? 1.0 : 0.9)
+                    .onAppear {
+                        viewModel.startPulsing()
+                    }
                 
                 Spacer()
                 
@@ -31,6 +36,12 @@ struct LaunchView: View {
                     .ignoresSafeArea()
                     .scaledToFit()
             }
+        }
+        .onAppear {
+            viewModel.startTimer()
+        }
+        .fullScreenCover(isPresented: $viewModel.isActive) {
+            EmptyView()
         }
     }
 }
