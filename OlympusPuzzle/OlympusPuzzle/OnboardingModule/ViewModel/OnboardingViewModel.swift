@@ -12,11 +12,14 @@ class OnboardingViewModel: ObservableObject {
     @Published var currentStep: Int = 0
     @Published var onboardingSteps = [
         OnboardingStep(id: 0,
-                       title: ""),
+                       image: .monstersLogo,
+                       title: L10n.Onboarding.Title.first),
         OnboardingStep(id: 1,
-                       title: ""),
+                       image: .heroesLogo,
+                       title: L10n.Onboarding.Title.second),
         OnboardingStep(id: 2,
-                       title: "")
+                       image: .godsLogo,
+                       title: L10n.Onboarding.Title.third)
     ]
     
     // Next step onboarding -

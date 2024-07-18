@@ -31,13 +31,23 @@ internal enum Asset {
     internal static let cca33Ff = ColorAsset(name: "cCA33FF")
     internal static let cf3A007 = ColorAsset(name: "cF3A007")
     internal static let cfcf42C = ColorAsset(name: "cFCF42C")
+    internal static let cffffff = ColorAsset(name: "cFFFFFF")
     internal static let с481571 = ColorAsset(name: "с481571")
   }
   internal enum Images {
     internal static let background = ImageAsset(name: "Background")
+    internal enum Buttons {
+      internal static let nextButton = ImageAsset(name: "NextButton")
+    }
     internal static let collection = ImageAsset(name: "Collection")
     internal static let launchBottomImage = ImageAsset(name: "LaunchBottomImage")
     internal static let logoName = ImageAsset(name: "LogoName")
+    internal enum Onboarding {
+      internal static let godsLogo = ImageAsset(name: "GodsLogo")
+      internal static let heroesLogo = ImageAsset(name: "HeroesLogo")
+      internal static let monstersLogo = ImageAsset(name: "MonstersLogo")
+      internal static let rulesLogo = ImageAsset(name: "RulesLogo")
+    }
   }
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
