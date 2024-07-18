@@ -8,8 +8,16 @@
 import SwiftUI
 import Combine
 
+// MARK: - Enum onboarding -
+enum AppCondition: String {
+    case onboarding
+    case menu
+}
+
 class LaunchViewModel: ObservableObject {
     // MARK: - Property -
+    @AppStorage("appCondition") var appCondition: AppCondition?
+    
     @Published var isActive = false
     @Published var pulse = false
     

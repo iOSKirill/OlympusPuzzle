@@ -41,7 +41,16 @@ struct LaunchView: View {
             viewModel.startTimer()
         }
         .fullScreenCover(isPresented: $viewModel.isActive) {
-            EmptyView()
+            switch viewModel.appCondition {
+            case .onboarding:
+                OnboardingView()
+
+            case .menu:
+                EmptyView()
+
+            case .none:
+                OnboardingView()
+            }
         }
     }
 }

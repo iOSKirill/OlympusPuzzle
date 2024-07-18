@@ -6,9 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 
 class OnboardingViewModel: ObservableObject {
     // MARK: - Property -
+    @AppStorage("appCondition", store: .standard) var appCondition: AppCondition = .onboarding
+    
     @Published var currentStep: Int = 0
     @Published var onboardingSteps = [
         OnboardingStep(id: 0,
@@ -27,7 +30,7 @@ class OnboardingViewModel: ObservableObject {
         if currentStep < onboardingSteps.count - 1 {
             currentStep += 1
         } else {
-            
+            appCondition = .menu
         }
     }
 }
