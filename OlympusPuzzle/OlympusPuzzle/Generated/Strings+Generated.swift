@@ -10,6 +10,19 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum L10n {
+  internal enum Onboarding {
+    internal enum Title {
+      /// Localizable.strings
+      ///   OlympusPuzzle
+      /// 
+      ///   Created by Kirill Manuilenko on 18.07.24.
+      internal static let first = L10n.tr("Localizable", "onboarding.title.first", fallback: "In the game Gates of Olympus: The Heavenly Devil, cast a fishing rod, when you bite, pick up the gems and take them out, watching the tension of the line. Avoid dangers!!")
+      /// In the game Gates of Olympus: The Heavenly Devil, cast a fishing rod, when you bite, pick up the gems and take them out, watching the tension of the line. Avoid dangers!!
+      internal static let second = L10n.tr("Localizable", "onboarding.title.second", fallback: "In the game Gates of Olympus: The Heavenly Devil, cast a fishing rod, when you bite, pick up the gems and take them out, watching the tension of the line. Avoid dangers!!")
+      /// In the game Gates of Olympus: The Heavenly Devil, cast a fishing rod, when you bite, pick up the gems and take them out, watching the tension of the line. Avoid dangers!!
+      internal static let third = L10n.tr("Localizable", "onboarding.title.third", fallback: "In the game Gates of Olympus: The Heavenly Devil, cast a fishing rod, when you bite, pick up the gems and take them out, watching the tension of the line. Avoid dangers!!")
+    }
+  }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces
