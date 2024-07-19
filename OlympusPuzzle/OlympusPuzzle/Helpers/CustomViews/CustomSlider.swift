@@ -27,7 +27,7 @@ struct CustomSlider: View {
                     startPoint: .top,
                     endPoint: .bottom
                 )
-                .frame(height: 14)
+                .frame(height: sliderHeight)
                 .cornerRadius(sliderHeight / 2)
                 
                 // Slider fill
@@ -36,7 +36,7 @@ struct CustomSlider: View {
                     startPoint: .top,
                     endPoint: .bottom
                 )
-                .frame(width: CGFloat((value - range.lowerBound) / (range.upperBound - range.lowerBound)) * geometry.size.width, height: 14)
+                .frame(width: CGFloat((value - range.lowerBound) / (range.upperBound - range.lowerBound)) * geometry.size.width, height: sliderHeight)
                 .cornerRadius(sliderHeight / 2)
                 
                 // Draggable knob

@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct MenuView: View {
+    // MARK: - Initialization -
+    init() {
+        AudioManager.shared.playBackgroundMusic()
+    }
     
     // MARK: - Body -
     var body: some View {

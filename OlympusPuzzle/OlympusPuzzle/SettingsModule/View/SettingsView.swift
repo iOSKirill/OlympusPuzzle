@@ -28,7 +28,7 @@ struct SettingsView: View {
                     CustomSlider(
                         value: $musicVolume,
                         range: 0...1,
-                        sliderHeight: 20,
+                        sliderHeight: 14,
                         gradientColorsFirst: [.c282729, .cEEEEEE, .c918D93, .c6C656D, .c282729],
                         gradientColorsSecond: [.c481571, .cCA33FF, .cA714CC, .c481571]
                     )
@@ -47,7 +47,7 @@ struct SettingsView: View {
                     CustomSlider(
                         value: $soundVolume,
                         range: 0...1,
-                        sliderHeight: 20,
+                        sliderHeight: 14,
                         gradientColorsFirst: [.c282729, .cEEEEEE, .c918D93, .c6C656D, .c282729],
                         gradientColorsSecond: [.c481571, .cCA33FF, .cA714CC, .c481571]
                     )
@@ -88,6 +88,10 @@ struct SettingsView: View {
             ToolbarItem(placement: .navigationBarLeading) {
                 BackButton()
             }
+        }
+        .onAppear {
+            musicVolume = UserDefaults.standard.double(forKey: "musicVolume")
+            soundVolume = UserDefaults.standard.double(forKey: "soundEffectsVolume")
         }
     }
 }
