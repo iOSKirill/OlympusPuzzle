@@ -46,7 +46,7 @@ struct LaunchView: View {
                 OnboardingView()
 
             case .menu:
-                EmptyView()
+                MenuView()
 
             case .none:
                 OnboardingView()

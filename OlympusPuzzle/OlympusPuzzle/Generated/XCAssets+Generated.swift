@@ -37,11 +37,17 @@ internal enum Asset {
   internal enum Images {
     internal static let background = ImageAsset(name: "Background")
     internal enum Buttons {
+      internal static let levelsButton = ImageAsset(name: "LevelsButton")
       internal static let nextButton = ImageAsset(name: "NextButton")
+      internal static let playButton = ImageAsset(name: "PlayButton")
+      internal static let settingsButton = ImageAsset(name: "SettingsButton")
+      internal static let shopButton = ImageAsset(name: "ShopButton")
     }
-    internal static let collection = ImageAsset(name: "Collection")
     internal static let launchBottomImage = ImageAsset(name: "LaunchBottomImage")
     internal static let logoName = ImageAsset(name: "LogoName")
+    internal enum NavBarButtons {
+      internal static let collection = ImageAsset(name: "Collection")
+    }
     internal enum Onboarding {
       internal static let godsLogo = ImageAsset(name: "GodsLogo")
       internal static let heroesLogo = ImageAsset(name: "HeroesLogo")
