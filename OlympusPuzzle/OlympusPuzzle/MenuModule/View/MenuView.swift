@@ -26,7 +26,7 @@ struct MenuView: View {
                         AppButton(image: .playButton, destination: EmptyView())
                         AppButton(image: .levelsButton, destination: EmptyView())
                         AppButton(image: .shopButton, destination: EmptyView())
-                        AppButton(image: .settingsButton, destination: EmptyView())
+                        AppButton(image: .settingsButton, destination: SettingsView())
                     }
                     .padding(.top, 64)
                     
@@ -38,7 +38,7 @@ struct MenuView: View {
                     NavigationLink {
                         EmptyView()
                     } label: {
-                        Image(.collection)
+                        Image(.collectionButton)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 42, height: 42)

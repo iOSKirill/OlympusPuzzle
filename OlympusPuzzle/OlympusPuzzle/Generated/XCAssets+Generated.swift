@@ -46,7 +46,8 @@ internal enum Asset {
     internal static let launchBottomImage = ImageAsset(name: "LaunchBottomImage")
     internal static let logoName = ImageAsset(name: "LogoName")
     internal enum NavBarButtons {
-      internal static let collection = ImageAsset(name: "Collection")
+      internal static let backButton = ImageAsset(name: "BackButton")
+      internal static let collectionButton = ImageAsset(name: "CollectionButton")
     }
     internal enum Onboarding {
       internal static let godsLogo = ImageAsset(name: "GodsLogo")
