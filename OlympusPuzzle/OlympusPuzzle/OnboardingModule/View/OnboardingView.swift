@@ -40,7 +40,7 @@ struct OnboardingView: View {
                         .padding([.horizontal, .bottom], 20)
                     }
                     .frame(maxWidth: .infinity)
-                    .background(.blue.opacity(0.5))
+                    .background(.c092155.opacity(0.8))
                     .cornerRadius(10)
                     .padding(.horizontal, 20)
                     .padding(.top, item.id == 0 ? 15 : 20)

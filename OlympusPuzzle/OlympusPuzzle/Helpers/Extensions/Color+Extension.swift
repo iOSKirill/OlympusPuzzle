@@ -36,4 +36,8 @@ public extension Color {
     var cFFFFFF: Color {
         Color("cFFFFFF")
     }
+    /// #c092155
+    var c092155: Color {
+        Color("c092155")
+    }
 }
