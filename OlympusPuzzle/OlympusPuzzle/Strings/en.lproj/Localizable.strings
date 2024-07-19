@@ -10,3 +10,7 @@
 "onboarding.title.first" = "In the game Gates of Olympus: The Heavenly Devil, cast a fishing rod, when you bite, pick up the gems and take them out, watching the tension of the line. Avoid dangers!!";
 "onboarding.title.second" = "In the game Gates of Olympus: The Heavenly Devil, cast a fishing rod, when you bite, pick up the gems and take them out, watching the tension of the line. Avoid dangers!!";
 "onboarding.title.third" = "In the game Gates of Olympus: The Heavenly Devil, cast a fishing rod, when you bite, pick up the gems and take them out, watching the tension of the line. Avoid dangers!!";
+
+// MARK: - Settings screen -
+"settings.title.music" = "MUSIC";
+"settings.title.sound" = "SOUND";

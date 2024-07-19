@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct OlympusPuzzleApp: App {
+    // MARK: - Body -
     var body: some Scene {
         WindowGroup {
             LaunchView()

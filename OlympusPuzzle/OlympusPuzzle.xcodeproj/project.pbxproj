@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C2FB1562C4A9F0300EDB19A /* backgroundMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6C2FB1552C4A9F0200EDB19A /* backgroundMusic.mp3 */; };
+		6C2FB15A2C4AA82300EDB19A /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2FB1592C4AA82300EDB19A /* AudioManager.swift */; };
+		6C2FB15C2C4AA9F100EDB19A /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2FB15B2C4AA9F100EDB19A /* CustomSlider.swift */; };
 		6C662A812C495EB300CC46B1 /* OlympusPuzzleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C662A802C495EB300CC46B1 /* OlympusPuzzleApp.swift */; };
 		6C662A852C495EB500CC46B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C662A842C495EB500CC46B1 /* Assets.xcassets */; };
 		6C662A882C495EB500CC46B1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C662A872C495EB500CC46B1 /* Preview Assets.xcassets */; };
@@ -27,9 +30,14 @@
 		6C99C0752C49A9C500CDAAA2 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C99C0742C49A9C500CDAAA2 /* Color+Extension.swift */; };
 		6C99C0792C4A5B3E00CDAAA2 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C99C0782C4A5B3E00CDAAA2 /* MenuView.swift */; };
 		6C99C07B2C4A5CDA00CDAAA2 /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C99C07A2C4A5CDA00CDAAA2 /* AppButton.swift */; };
+		6C99C07F2C4A603D00CDAAA2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C99C07E2C4A603D00CDAAA2 /* SettingsView.swift */; };
+		6C99C0812C4A60AD00CDAAA2 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C99C0802C4A60AD00CDAAA2 /* BackButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6C2FB1552C4A9F0200EDB19A /* backgroundMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = backgroundMusic.mp3; sourceTree = "<group>"; };
+		6C2FB1592C4AA82300EDB19A /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		6C2FB15B2C4AA9F100EDB19A /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
 		6C662A7D2C495EB300CC46B1 /* OlympusPuzzle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OlympusPuzzle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C662A802C495EB300CC46B1 /* OlympusPuzzleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OlympusPuzzleApp.swift; sourceTree = "<group>"; };
 		6C662A842C495EB500CC46B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -52,6 +60,8 @@
 		6C99C0742C49A9C500CDAAA2 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		6C99C0782C4A5B3E00CDAAA2 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		6C99C07A2C4A5CDA00CDAAA2 /* AppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppButton.swift; sourceTree = "<group>"; };
+		6C99C07E2C4A603D00CDAAA2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		6C99C0802C4A60AD00CDAAA2 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +75,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6C2FB1542C4A9EBC00EDB19A /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				6C2FB1552C4A9F0200EDB19A /* backgroundMusic.mp3 */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
+		6C2FB1582C4AA80B00EDB19A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				6C2FB1592C4AA82300EDB19A /* AudioManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		6C662A742C495EB200CC46B1 = {
 			isa = PBXGroup;
 			children = (
@@ -86,11 +112,14 @@
 			children = (
 				6C99C0432C498E4B00CDAAA2 /* App */,
 				6C99C0422C498E3E00CDAAA2 /* Generated */,
+				6C2FB1582C4AA80B00EDB19A /* Services */,
 				6C99C0612C49940900CDAAA2 /* LaunchModule */,
 				6C99C0692C4999AF00CDAAA2 /* OnboardingModule */,
 				6C99C0762C4A5B1B00CDAAA2 /* MenuModule */,
+				6C99C07C2C4A602600CDAAA2 /* SettingsModule */,
 				6C99C05C2C49905C00CDAAA2 /* Helpers */,
 				6C99C04C2C498F2B00CDAAA2 /* Fonts */,
+				6C2FB1542C4A9EBC00EDB19A /* Music */,
 				6C99C0442C498E7000CDAAA2 /* Strings */,
 				6C99C0412C498E3000CDAAA2 /* Resources */,
 				6C662A862C495EB500CC46B1 /* Preview Content */,
@@ -174,6 +203,8 @@
 			isa = PBXGroup;
 			children = (
 				6C99C07A2C4A5CDA00CDAAA2 /* AppButton.swift */,
+				6C99C0802C4A60AD00CDAAA2 /* BackButton.swift */,
+				6C2FB15B2C4AA9F100EDB19A /* CustomSlider.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -253,6 +284,22 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		6C99C07C2C4A602600CDAAA2 /* SettingsModule */ = {
+			isa = PBXGroup;
+			children = (
+				6C99C07D2C4A603100CDAAA2 /* View */,
+			);
+			path = SettingsModule;
+			sourceTree = "<group>";
+		};
+		6C99C07D2C4A603100CDAAA2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6C99C07E2C4A603D00CDAAA2 /* SettingsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -314,6 +361,7 @@
 			files = (
 				6C662A882C495EB500CC46B1 /* Preview Assets.xcassets in Resources */,
 				6C99C04A2C498E9600CDAAA2 /* Localizable.strings in Resources */,
+				6C2FB1562C4A9F0300EDB19A /* backgroundMusic.mp3 in Resources */,
 				6C99C0562C498FB200CDAAA2 /* SplineSansMono-Bold.ttf in Resources */,
 				6C662A852C495EB500CC46B1 /* Assets.xcassets in Resources */,
 				6C99C0592C498FC100CDAAA2 /* SplineSansMono-Regular.ttf in Resources */,
@@ -352,18 +400,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C99C0522C498F4700CDAAA2 /* Strings+Generated.swift in Sources */,
+				6C2FB15C2C4AA9F100EDB19A /* CustomSlider.swift in Sources */,
 				6C99C0792C4A5B3E00CDAAA2 /* MenuView.swift in Sources */,
 				6C99C0652C49943100CDAAA2 /* LaunchView.swift in Sources */,
 				6C99C0682C49944B00CDAAA2 /* LaunchViewModel.swift in Sources */,
 				6C99C0512C498F4700CDAAA2 /* Fonts+Generated.swift in Sources */,
 				6C99C0702C4999EB00CDAAA2 /* OnboardingViewModel.swift in Sources */,
 				6C99C0602C49909900CDAAA2 /* Font+Extension.swift in Sources */,
+				6C99C07F2C4A603D00CDAAA2 /* SettingsView.swift in Sources */,
 				6C99C06E2C4999DE00CDAAA2 /* OnboardingView.swift in Sources */,
 				6C99C0502C498F4700CDAAA2 /* XCAssets+Generated.swift in Sources */,
+				6C2FB15A2C4AA82300EDB19A /* AudioManager.swift in Sources */,
 				6C99C07B2C4A5CDA00CDAAA2 /* AppButton.swift in Sources */,
 				6C99C0732C49A66800CDAAA2 /* OnboardingStep.swift in Sources */,
 				6C99C0752C49A9C500CDAAA2 /* Color+Extension.swift in Sources */,
 				6C662A812C495EB300CC46B1 /* OlympusPuzzleApp.swift in Sources */,
+				6C99C0812C4A60AD00CDAAA2 /* BackButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

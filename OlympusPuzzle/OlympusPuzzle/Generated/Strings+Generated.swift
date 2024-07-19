@@ -23,6 +23,14 @@ internal enum L10n {
       internal static let third = L10n.tr("Localizable", "onboarding.title.third", fallback: "In the game Gates of Olympus: The Heavenly Devil, cast a fishing rod, when you bite, pick up the gems and take them out, watching the tension of the line. Avoid dangers!!")
     }
   }
+  internal enum Settings {
+    internal enum Title {
+      /// MUSIC
+      internal static let music = L10n.tr("Localizable", "settings.title.music", fallback: "MUSIC")
+      /// SOUND
+      internal static let sound = L10n.tr("Localizable", "settings.title.sound", fallback: "SOUND")
+    }
+  }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces
