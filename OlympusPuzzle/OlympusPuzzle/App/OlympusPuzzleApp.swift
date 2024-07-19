@@ -9,6 +9,13 @@ import SwiftUI
 
 @main
 struct OlympusPuzzleApp: App {
+    
+    // MARK: - Initialization -
+    init() {
+        AudioManager.shared.playBackgroundMusic()
+    }
+    
+    // MARK: - Body -
     var body: some Scene {
         WindowGroup {
             LaunchView()

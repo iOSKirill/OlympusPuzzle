@@ -40,4 +40,20 @@ public extension Color {
     var c092155: Color {
         Color("c092155")
     }
+    /// #cEEEEEE
+    var cEEEEEE: Color {
+        Color("cEEEEEE")
+    }
+    /// #c918D93
+    var c918D93: Color {
+        Color("c918D93")
+    }
+    /// #c6C656D
+    var c6C656D: Color {
+        Color("c6C656D")
+    }
+    /// #c282729
+    var c282729: Color {
+        Color("c282729")
+    }
 }

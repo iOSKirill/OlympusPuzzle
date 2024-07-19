@@ -27,9 +27,13 @@ internal enum Asset {
   internal static let accentColor = ColorAsset(name: "AccentColor")
   internal enum Colors {
     internal static let c092155 = ColorAsset(name: "c092155")
+    internal static let c282729 = ColorAsset(name: "c282729")
     internal static let c481571 = ColorAsset(name: "c481571")
+    internal static let c6C656D = ColorAsset(name: "c6C656D")
+    internal static let c918D93 = ColorAsset(name: "c918D93")
     internal static let ca714Cc = ColorAsset(name: "cA714CC")
     internal static let cca33Ff = ColorAsset(name: "cCA33FF")
+    internal static let ceeeeee = ColorAsset(name: "cEEEEEE")
     internal static let cf3A007 = ColorAsset(name: "cF3A007")
     internal static let cfcf42C = ColorAsset(name: "cFCF42C")
     internal static let cffffff = ColorAsset(name: "cFFFFFF")
@@ -44,6 +48,7 @@ internal enum Asset {
       internal static let settingsButton = ImageAsset(name: "SettingsButton")
       internal static let shopButton = ImageAsset(name: "ShopButton")
     }
+    internal static let circle = ImageAsset(name: "Circle")
     internal static let launchBottomImage = ImageAsset(name: "LaunchBottomImage")
     internal static let logoName = ImageAsset(name: "LogoName")
     internal enum NavBarButtons {
@@ -56,6 +61,9 @@ internal enum Asset {
       internal static let monstersLogo = ImageAsset(name: "MonstersLogo")
       internal static let rulesLogo = ImageAsset(name: "RulesLogo")
     }
+    internal static let settingsLogo = ImageAsset(name: "SettingsLogo")
+    internal static let thumb = ImageAsset(name: "Thumb")
+    internal static let track = ImageAsset(name: "Track")
   }
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
