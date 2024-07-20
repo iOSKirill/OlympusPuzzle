@@ -49,6 +49,24 @@ internal enum Asset {
       internal static let shopButton = ImageAsset(name: "ShopButton")
     }
     internal static let circle = ImageAsset(name: "Circle")
+    internal enum GameElements {
+      internal enum Diamonds {
+        internal static let diamond1 = ImageAsset(name: "Diamond1")
+        internal static let diamond2 = ImageAsset(name: "Diamond2")
+        internal static let diamond3 = ImageAsset(name: "Diamond3")
+        internal static let diamond4 = ImageAsset(name: "Diamond4")
+        internal static let diamond5 = ImageAsset(name: "Diamond5")
+        internal static let diamond6 = ImageAsset(name: "Diamond6")
+      }
+      internal enum Enemys {
+        internal static let enemy1 = ImageAsset(name: "Enemy1")
+        internal static let enemy2 = ImageAsset(name: "Enemy2")
+      }
+      internal static let fishingLine = ImageAsset(name: "FishingLine")
+      internal static let hook = ImageAsset(name: "Hook")
+      internal static let loseFishingLine = ImageAsset(name: "LoseFishingLine")
+      internal static let score = ImageAsset(name: "Score")
+    }
     internal static let launchBottomImage = ImageAsset(name: "LaunchBottomImage")
     internal static let logoName = ImageAsset(name: "LogoName")
     internal enum NavBarButtons {
