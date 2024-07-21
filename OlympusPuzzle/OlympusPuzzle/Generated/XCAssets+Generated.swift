@@ -58,7 +58,10 @@ internal enum Asset {
       internal static let backgroundShadow = ImageAsset(name: "BackgroundShadow")
     }
     internal enum Buttons {
+      internal static let godsButton = ImageAsset(name: "GodsButton")
+      internal static let heroesButton = ImageAsset(name: "HeroesButton")
       internal static let levelsButton = ImageAsset(name: "LevelsButton")
+      internal static let monstersButton = ImageAsset(name: "MonstersButton")
       internal static let nextButton = ImageAsset(name: "NextButton")
       internal static let noButton = ImageAsset(name: "NoButton")
       internal static let playButton = ImageAsset(name: "PlayButton")
@@ -87,6 +90,11 @@ internal enum Asset {
     }
     internal static let launchBottomImage = ImageAsset(name: "LaunchBottomImage")
     internal static let logoName = ImageAsset(name: "LogoName")
+    internal enum Logos {
+      internal static let selectLevelLogo = ImageAsset(name: "SelectLevelLogo")
+      internal static let settingsLogo = ImageAsset(name: "SettingsLogo")
+      internal static let shopLogo = ImageAsset(name: "ShopLogo")
+    }
     internal enum NavBarButtons {
       internal static let backButton = ImageAsset(name: "BackButton")
       internal static let collectionButton = ImageAsset(name: "CollectionButton")
@@ -97,8 +105,6 @@ internal enum Asset {
       internal static let monstersLogo = ImageAsset(name: "MonstersLogo")
       internal static let rulesLogo = ImageAsset(name: "RulesLogo")
     }
-    internal static let settingsLogo = ImageAsset(name: "SettingsLogo")
-    internal static let shopLogo = ImageAsset(name: "ShopLogo")
     internal static let thumb = ImageAsset(name: "Thumb")
     internal static let track = ImageAsset(name: "Track")
   }
