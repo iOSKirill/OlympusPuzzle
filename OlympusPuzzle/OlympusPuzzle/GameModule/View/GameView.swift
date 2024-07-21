@@ -39,12 +39,7 @@ class GameScene: SKScene {
 
     func setupScene() {
         // Set up background image
-        background = SKSpriteNode(imageNamed: "Background")
-        background.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        background.zPosition = -1
-        background.size = size
-        background.name = "background"
-        addChild(background)
+        updateBackground()
         
         // Setup line
         line = SKSpriteNode(imageNamed: "FishingLine")
@@ -72,6 +67,21 @@ class GameScene: SKScene {
             ])
         ))
     }
+    
+    @objc func updateBackground() {
+         let savedBackground = UserDefaults.standard.string(forKey: "selectedBackground") ?? "Background"
+         
+         if background != nil {
+             background.removeFromParent()
+         }
+         
+         background = SKSpriteNode(imageNamed: savedBackground)
+         background.position = CGPoint(x: size.width / 2, y: size.height / 2)
+         background.zPosition = -1
+         background.size = size
+         background.name = "background"
+         addChild(background)
+     }
 
     func spawnElement() {
         let elements = ["Diamond1", "Diamond2"]
@@ -194,50 +204,50 @@ class GameScene: SKScene {
 
 struct GameView: View {
     // MARK: - Property -
+    @EnvironmentObject var appSettings: AppSettings
+    
     @State private var coins = UserDefaults.standard.integer(forKey: "coins")
     @State private var scene = GameScene(size: CGSize(width: 300, height: 600))
     @State private var isGameOver = false
 
     // MARK: - Body -
     var body: some View {
-        NavigationView {
-            ZStack {
-                SpriteView(scene: scene)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .ignoresSafeArea()
-                
-                if isGameOver {
-                    GameOverView(isPresentedGameScreen: $isGameOver, isGameOver: $isGameOver)
+        ZStack {
+            SpriteView(scene: scene)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .ignoresSafeArea()
+            
+            if isGameOver {
+                GameOverView(isPresentedGameScreen: $isGameOver, isGameOver: $isGameOver)
+            }
+        }
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                BackButton()
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarCoinView(coins: $coins)
+            }
+        }
+        .onAppear {
+            NotificationCenter.default.addObserver(forName: .coinsUpdated, object: nil, queue: .main) { notification in
+                if let updatedCoins = notification.userInfo?["coins"] as? Int {
+                    coins = updatedCoins
                 }
             }
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    BackButton()
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    ToolbarCoinView(coins: $coins)
-                }
+            NotificationCenter.default.addObserver(forName: .gameOver, object: nil, queue: .main) { _ in
+                isGameOver = true
             }
-            .onAppear {
-                NotificationCenter.default.addObserver(forName: .coinsUpdated, object: nil, queue: .main) { notification in
-                    if let updatedCoins = notification.userInfo?["coins"] as? Int {
-                        coins = updatedCoins
-                    }
-                }
-                NotificationCenter.default.addObserver(forName: .gameOver, object: nil, queue: .main) { _ in
-                    isGameOver = true
-                }
-                NotificationCenter.default.addObserver(forName: .restartGame, object: nil, queue: .main) { _ in
-                    isGameOver = false
-                    scene.resetScene()
-                }
+            NotificationCenter.default.addObserver(forName: .restartGame, object: nil, queue: .main) { _ in
+                isGameOver = false
+                scene.resetScene()
             }
-            .onDisappear {
-                NotificationCenter.default.removeObserver(self, name: .coinsUpdated, object: nil)
-                NotificationCenter.default.removeObserver(self, name: .gameOver, object: nil)
-                NotificationCenter.default.removeObserver(self, name: .restartGame, object: nil)
-            }
+        }
+        .onDisappear {
+            NotificationCenter.default.removeObserver(self, name: .coinsUpdated, object: nil)
+            NotificationCenter.default.removeObserver(self, name: .gameOver, object: nil)
+            NotificationCenter.default.removeObserver(self, name: .restartGame, object: nil)
         }
     }
 }

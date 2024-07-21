@@ -40,13 +40,31 @@ internal enum Asset {
     internal static let с481571 = ColorAsset(name: "с481571")
   }
   internal enum Images {
-    internal static let background = ImageAsset(name: "Background")
+    internal enum Arrows {
+      internal static let backArrow = ImageAsset(name: "BackArrow")
+      internal static let nextArrow = ImageAsset(name: "NextArrow")
+    }
+    internal enum Backgrounds {
+      internal static let backgorundShopAlert = ImageAsset(name: "BackgorundShopAlert")
+      internal static let background = ImageAsset(name: "Background")
+      internal static let background1 = ImageAsset(name: "Background1")
+      internal static let background2 = ImageAsset(name: "Background2")
+      internal static let background3 = ImageAsset(name: "Background3")
+      internal static let background4 = ImageAsset(name: "Background4")
+      internal static let background5 = ImageAsset(name: "Background5")
+      internal static let background6 = ImageAsset(name: "Background6")
+      internal static let background7 = ImageAsset(name: "Background7")
+      internal static let background8 = ImageAsset(name: "Background8")
+      internal static let backgroundShadow = ImageAsset(name: "BackgroundShadow")
+    }
     internal enum Buttons {
       internal static let levelsButton = ImageAsset(name: "LevelsButton")
       internal static let nextButton = ImageAsset(name: "NextButton")
+      internal static let noButton = ImageAsset(name: "NoButton")
       internal static let playButton = ImageAsset(name: "PlayButton")
       internal static let settingsButton = ImageAsset(name: "SettingsButton")
       internal static let shopButton = ImageAsset(name: "ShopButton")
+      internal static let yesButton = ImageAsset(name: "YesButton")
     }
     internal static let circle = ImageAsset(name: "Circle")
     internal enum GameElements {
@@ -80,6 +98,7 @@ internal enum Asset {
       internal static let rulesLogo = ImageAsset(name: "RulesLogo")
     }
     internal static let settingsLogo = ImageAsset(name: "SettingsLogo")
+    internal static let shopLogo = ImageAsset(name: "ShopLogo")
     internal static let thumb = ImageAsset(name: "Thumb")
     internal static let track = ImageAsset(name: "Track")
   }
