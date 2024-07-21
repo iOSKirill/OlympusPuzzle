@@ -34,6 +34,11 @@ class GameScene: SKScene {
     }
 
     override func didMove(to view: SKView) {
+        isHookMovingDown = false
+        lastElementYPosition = nil
+        
+        removeAllChildren()
+        removeAllActions()
         setupScene()
     }
 
@@ -209,6 +214,9 @@ struct GameView: View {
     @State private var coins = UserDefaults.standard.integer(forKey: "coins")
     @State private var scene = GameScene(size: CGSize(width: 300, height: 600))
     @State private var isGameOver = false
+    @State private var timer: Timer?
+    @State private var timeRemaining = 60
+    @State private var isGameWin = false
 
     // MARK: - Body -
     var body: some View {
@@ -217,17 +225,39 @@ struct GameView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .ignoresSafeArea()
             
+            VStack {
+                Spacer()
+                ZStack {
+                    Image(.time)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 55)
+                    
+                    Text("\(timeFormatted(timeRemaining))")
+                        .font(.splineSansMonoMedium(of: 20))
+                        .foregroundColor(.cFFFFFF)
+                        .padding(.leading, 20)
+                        .padding(.bottom, 20)
+                }
+            }
+            
             if isGameOver {
                 GameOverView(isPresentedGameScreen: $isGameOver, isGameOver: $isGameOver)
+            } else if isGameWin {
+                GameWinView()
             }
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                BackButton()
+                if !isGameOver && !isGameWin {
+                    BackButton()
+                }
             }
             ToolbarItem(placement: .navigationBarTrailing) {
-                ToolbarCoinView(coins: $coins)
+                if !isGameOver && !isGameWin {
+                    ToolbarCoinView(coins: $coins)
+                }
             }
         }
         .onAppear {
@@ -238,51 +268,55 @@ struct GameView: View {
             }
             NotificationCenter.default.addObserver(forName: .gameOver, object: nil, queue: .main) { _ in
                 isGameOver = true
+                stopTimer()
             }
             NotificationCenter.default.addObserver(forName: .restartGame, object: nil, queue: .main) { _ in
                 isGameOver = false
+                isGameWin = false
                 scene.resetScene()
+                startTimer()
             }
+            startTimer()
         }
         .onDisappear {
             NotificationCenter.default.removeObserver(self, name: .coinsUpdated, object: nil)
             NotificationCenter.default.removeObserver(self, name: .gameOver, object: nil)
             NotificationCenter.default.removeObserver(self, name: .restartGame, object: nil)
+            stopTimer()
         }
     }
-}
-
-
-
-struct GameOverView: View {
-    @Binding var isPresentedGameScreen: Bool
-    @Binding var isGameOver: Bool
-    var body: some View {
-        VStack {
-            Text("Game Over")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .foregroundColor(.white)
-            Button {
-                // Reset game state
-                isPresentedGameScreen = false
-                NotificationCenter.default.post(name: .restartGame, object: nil)
-                isGameOver = false
-            } label: {
-                Text("Restart")
-                    .font(.title)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+    
+    func startTimer() {
+        timeRemaining = 60
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            if timeRemaining > 0 {
+                timeRemaining -= 1
+            } else {
+                stopTimer()
+                checkGameOutcome()
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.black.opacity(0.8))
-        .edgesIgnoringSafeArea(.all)
+    }
+    
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    func checkGameOutcome() {
+        if coins > 50 {
+            isGameWin = true
+        } else {
+            isGameOver = true
+        }
+    }
+    
+    func timeFormatted(_ totalSeconds: Int) -> String {
+        let minutes = totalSeconds / 60
+        let seconds = totalSeconds % 60
+        return String(format: "%02d:%02d", minutes, seconds)
     }
 }
-
 
 #Preview {
     GameView()

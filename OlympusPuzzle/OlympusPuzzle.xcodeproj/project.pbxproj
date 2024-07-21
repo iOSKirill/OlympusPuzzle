@@ -20,6 +20,8 @@
 		6C84F0D02C4D3AF30087C086 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C84F0CF2C4D3AF30087C086 /* AppSettings.swift */; };
 		6C84F0D22C4D424F0087C086 /* BuyBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C84F0D12C4D424F0087C086 /* BuyBackground.swift */; };
 		6C84F0D72C4D556A0087C086 /* LevelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C84F0D62C4D556A0087C086 /* LevelsView.swift */; };
+		6C84F0D92C4DACC30087C086 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C84F0D82C4DACC30087C086 /* GameOverView.swift */; };
+		6C84F0DB2C4DB5C10087C086 /* GameWinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C84F0DA2C4DB5C10087C086 /* GameWinView.swift */; };
 		6C9542102C4C6C340045983B /* ToolbarCoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C95420F2C4C6C340045983B /* ToolbarCoinView.swift */; };
 		6C9542122C4C6CA60045983B /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9542112C4C6CA60045983B /* Notification+Extension.swift */; };
 		6C99C04A2C498E9600CDAAA2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6C99C0482C498E9600CDAAA2 /* Localizable.strings */; };
@@ -58,6 +60,8 @@
 		6C84F0CF2C4D3AF30087C086 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		6C84F0D12C4D424F0087C086 /* BuyBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyBackground.swift; sourceTree = "<group>"; };
 		6C84F0D62C4D556A0087C086 /* LevelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelsView.swift; sourceTree = "<group>"; };
+		6C84F0D82C4DACC30087C086 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
+		6C84F0DA2C4DB5C10087C086 /* GameWinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameWinView.swift; sourceTree = "<group>"; };
 		6C95420F2C4C6C340045983B /* ToolbarCoinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarCoinView.swift; sourceTree = "<group>"; };
 		6C9542112C4C6CA60045983B /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		6C99C0492C498E9600CDAAA2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -296,6 +300,8 @@
 				6C2FB15B2C4AA9F100EDB19A /* CustomSlider.swift */,
 				6C95420F2C4C6C340045983B /* ToolbarCoinView.swift */,
 				6C84F0D12C4D424F0087C086 /* BuyBackground.swift */,
+				6C84F0D82C4DACC30087C086 /* GameOverView.swift */,
+				6C84F0DA2C4DB5C10087C086 /* GameWinView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -513,8 +519,10 @@
 				6C7F071F2C4AB294006A92B3 /* GameViewModel.swift in Sources */,
 				6C99C0752C49A9C500CDAAA2 /* Color+Extension.swift in Sources */,
 				6C662A812C495EB300CC46B1 /* OlympusPuzzleApp.swift in Sources */,
+				6C84F0DB2C4DB5C10087C086 /* GameWinView.swift in Sources */,
 				6C84F0CC2C4D306D0087C086 /* ShopView.swift in Sources */,
 				6C99C0812C4A60AD00CDAAA2 /* BackButton.swift in Sources */,
+				6C84F0D92C4DACC30087C086 /* GameOverView.swift in Sources */,
 				6C84F0D22C4D424F0087C086 /* BuyBackground.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

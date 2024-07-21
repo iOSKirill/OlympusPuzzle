@@ -55,18 +55,22 @@ internal enum Asset {
       internal static let background6 = ImageAsset(name: "Background6")
       internal static let background7 = ImageAsset(name: "Background7")
       internal static let background8 = ImageAsset(name: "Background8")
+      internal static let backgroundLightning = ImageAsset(name: "BackgroundLightning")
       internal static let backgroundShadow = ImageAsset(name: "BackgroundShadow")
+      internal static let backgroundWin = ImageAsset(name: "BackgroundWin")
     }
     internal enum Buttons {
       internal static let godsButton = ImageAsset(name: "GodsButton")
       internal static let heroesButton = ImageAsset(name: "HeroesButton")
       internal static let levelsButton = ImageAsset(name: "LevelsButton")
+      internal static let menuButton = ImageAsset(name: "MenuButton")
       internal static let monstersButton = ImageAsset(name: "MonstersButton")
       internal static let nextButton = ImageAsset(name: "NextButton")
       internal static let noButton = ImageAsset(name: "NoButton")
       internal static let playButton = ImageAsset(name: "PlayButton")
       internal static let settingsButton = ImageAsset(name: "SettingsButton")
       internal static let shopButton = ImageAsset(name: "ShopButton")
+      internal static let tryAgainButton = ImageAsset(name: "TryAgainButton")
       internal static let yesButton = ImageAsset(name: "YesButton")
     }
     internal static let circle = ImageAsset(name: "Circle")
@@ -89,11 +93,17 @@ internal enum Asset {
       internal static let score = ImageAsset(name: "Score")
     }
     internal static let launchBottomImage = ImageAsset(name: "LaunchBottomImage")
+    internal enum Lightnings {
+      internal static let lightning1 = ImageAsset(name: "Lightning1")
+      internal static let lightning2 = ImageAsset(name: "lightning2")
+    }
     internal static let logoName = ImageAsset(name: "LogoName")
     internal enum Logos {
+      internal static let orLogo = ImageAsset(name: "OrLogo")
       internal static let selectLevelLogo = ImageAsset(name: "SelectLevelLogo")
       internal static let settingsLogo = ImageAsset(name: "SettingsLogo")
       internal static let shopLogo = ImageAsset(name: "ShopLogo")
+      internal static let youWinLogo = ImageAsset(name: "YouWinLogo")
     }
     internal enum NavBarButtons {
       internal static let backButton = ImageAsset(name: "BackButton")
