@@ -103,6 +103,7 @@ internal enum Asset {
       internal static let selectLevelLogo = ImageAsset(name: "SelectLevelLogo")
       internal static let settingsLogo = ImageAsset(name: "SettingsLogo")
       internal static let shopLogo = ImageAsset(name: "ShopLogo")
+      internal static let timeIsOverLogo = ImageAsset(name: "TimeIsOverLogo")
       internal static let youWinLogo = ImageAsset(name: "YouWinLogo")
     }
     internal enum NavBarButtons {
@@ -116,6 +117,7 @@ internal enum Asset {
       internal static let rulesLogo = ImageAsset(name: "RulesLogo")
     }
     internal static let thumb = ImageAsset(name: "Thumb")
+    internal static let time = ImageAsset(name: "Time")
     internal static let track = ImageAsset(name: "Track")
   }
 }

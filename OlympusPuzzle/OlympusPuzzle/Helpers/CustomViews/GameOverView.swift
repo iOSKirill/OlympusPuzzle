@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GameOverView: View {
     // MARK: - Property -
+    @StateObject private var viewModel = GameViewModel()
     @Environment(\.dismiss) private var dismiss
     @Binding var isPresentedGameScreen: Bool
     @Binding var isGameOver: Bool
@@ -22,6 +23,15 @@ struct GameOverView: View {
                 .offset(x: -0.5)
                 
             VStack {
+                
+                Spacer()
+                
+                Image(.timeIsOverLogo)
+                    .scaleEffect(viewModel.pulse ? 1.0 : 0.9)
+                    .onAppear {
+                        viewModel.startPulsing()
+                    }
+                
                 Spacer()
                 
                 VStack(spacing: 25) {

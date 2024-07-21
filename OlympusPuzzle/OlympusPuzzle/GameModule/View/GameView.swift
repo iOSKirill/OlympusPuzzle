@@ -27,6 +27,12 @@ class GameScene: SKScene {
         }
     }
     
+    var roundCoins = 0 {
+        didSet {
+            NotificationCenter.default.post(name: .roundCoinsUpdated, object: nil, userInfo: ["roundCoins": roundCoins])
+        }
+    }
+
     var isGameOver = false {
         didSet {
             NotificationCenter.default.post(name: .gameOver, object: nil)
@@ -36,6 +42,7 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         isHookMovingDown = false
         lastElementYPosition = nil
+        roundCoins = 0
         
         removeAllChildren()
         removeAllActions()
@@ -176,6 +183,7 @@ class GameScene: SKScene {
             } else {
                 // Regular element collected
                 element.removeFromParent()
+                roundCoins += 10
                 coins += 10
             }
             break
@@ -199,6 +207,7 @@ class GameScene: SKScene {
         isGameOver = false
         isHookMovingDown = false
         lastElementYPosition = nil
+        roundCoins = 0
         
         removeAllChildren()
         removeAllActions()
@@ -207,11 +216,13 @@ class GameScene: SKScene {
     }
 }
 
+
 struct GameView: View {
     // MARK: - Property -
     @EnvironmentObject var appSettings: AppSettings
     
     @State private var coins = UserDefaults.standard.integer(forKey: "coins")
+    @State private var roundCoins = 0
     @State private var scene = GameScene(size: CGSize(width: 300, height: 600))
     @State private var isGameOver = false
     @State private var timer: Timer?
@@ -232,11 +243,12 @@ struct GameView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(height: 55)
+                        .padding(.bottom, 20)
                     
                     Text("\(timeFormatted(timeRemaining))")
                         .font(.splineSansMonoMedium(of: 20))
                         .foregroundColor(.cFFFFFF)
-                        .padding(.leading, 20)
+                        .padding(.leading, 40)
                         .padding(.bottom, 20)
                 }
             }
@@ -266,6 +278,11 @@ struct GameView: View {
                     coins = updatedCoins
                 }
             }
+            NotificationCenter.default.addObserver(forName: .roundCoinsUpdated, object: nil, queue: .main) { notification in
+                if let updatedRoundCoins = notification.userInfo?["roundCoins"] as? Int {
+                    roundCoins = updatedRoundCoins
+                }
+            }
             NotificationCenter.default.addObserver(forName: .gameOver, object: nil, queue: .main) { _ in
                 isGameOver = true
                 stopTimer()
@@ -280,6 +297,7 @@ struct GameView: View {
         }
         .onDisappear {
             NotificationCenter.default.removeObserver(self, name: .coinsUpdated, object: nil)
+            NotificationCenter.default.removeObserver(self, name: .roundCoinsUpdated, object: nil)
             NotificationCenter.default.removeObserver(self, name: .gameOver, object: nil)
             NotificationCenter.default.removeObserver(self, name: .restartGame, object: nil)
             stopTimer()
@@ -304,7 +322,7 @@ struct GameView: View {
     }
     
     func checkGameOutcome() {
-        if coins > 50 {
+        if roundCoins > 20 {
             isGameWin = true
         } else {
             isGameOver = true
@@ -317,6 +335,7 @@ struct GameView: View {
         return String(format: "%02d:%02d", minutes, seconds)
     }
 }
+
 
 #Preview {
     GameView()
