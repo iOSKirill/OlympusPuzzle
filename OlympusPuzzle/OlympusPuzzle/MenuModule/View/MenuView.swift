@@ -37,7 +37,7 @@ struct MenuView: View {
                      
                     VStack(spacing: 30) {
                         AppButton(image: .playButton, destination: GameView())
-                        AppButton(image: .levelsButton, destination: EmptyView())
+                        AppButton(image: .levelsButton, destination: LevelsView())
                         AppButton(image: .shopButton, destination: ShopView())
                         AppButton(image: .settingsButton, destination: SettingsView())
                     }
@@ -64,4 +64,5 @@ struct MenuView: View {
 
 #Preview {
     MenuView()
+        .environmentObject(AppSettings())
 }

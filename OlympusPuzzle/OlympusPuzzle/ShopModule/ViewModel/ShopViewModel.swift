@@ -29,8 +29,8 @@ class ShopViewModel: ObservableObject {
         guard let imageName = selectedBackgroundForPurchase else { return }
 
         let currentCoins = UserDefaults.standard.integer(forKey: "coins")
-        if currentCoins >= 10 {
-            UserDefaults.standard.set(currentCoins - 10, forKey: "coins")
+        if currentCoins >= 200 {
+            UserDefaults.standard.set(currentCoins - 200, forKey: "coins")
             purchasedBackgrounds.insert(imageName)
             UserDefaults.standard.set(Array(purchasedBackgrounds), forKey: "purchasedBackgrounds")
             appSettings.selectedBackground = imageName
@@ -44,7 +44,7 @@ class ShopViewModel: ObservableObject {
     func selectBackgroundForPurchase(_ imageName: String) {
         selectedBackgroundForPurchase = imageName
         let currentCoins = UserDefaults.standard.integer(forKey: "coins")
-        isSufficientCoins = currentCoins >= 10
+        isSufficientCoins = currentCoins >= 200
         showBuyBackground = true
     }
 }
