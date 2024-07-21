@@ -31,6 +31,16 @@ internal enum L10n {
       internal static let sound = L10n.tr("Localizable", "settings.title.sound", fallback: "SOUND")
     }
   }
+  internal enum Shop {
+    internal enum Title {
+      /// BLOCK
+      internal static let block = L10n.tr("Localizable", "shop.title.block", fallback: "BLOCK")
+      /// OPEN A NEW BACKGROUND FOR 200 COINS?
+      internal static let buy = L10n.tr("Localizable", "shop.title.buy", fallback: "OPEN A NEW BACKGROUND FOR 200 COINS?")
+      /// YOU DON'T HAVE ENOUGH COINS. PLAY AND COLLECT COINS TO BUY A BACKGROUND.
+      internal static let noCoins = L10n.tr("Localizable", "shop.title.noCoins", fallback: "YOU DON'T HAVE ENOUGH COINS. PLAY AND COLLECT COINS TO BUY A BACKGROUND.")
+    }
+  }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces

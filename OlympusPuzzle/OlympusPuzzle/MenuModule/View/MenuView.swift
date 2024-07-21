@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct MenuView: View {
+    // MARK: - Property -
+    @EnvironmentObject var appSettings: AppSettings
+    
     // MARK: - Initialization -
     init() {
         AudioManager.shared.playBackgroundMusic()
@@ -17,9 +20,15 @@ struct MenuView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Image(.background)
-                    .resizable()
-                    .ignoresSafeArea()
+                if let savedBackground = appSettings.selectedBackground {
+                    Image(savedBackground)
+                        .resizable()
+                        .ignoresSafeArea()
+                } else {
+                    Image(.background)
+                        .resizable()
+                        .ignoresSafeArea()
+                }
                 
                 VStack {
                     Spacer()
@@ -29,7 +38,7 @@ struct MenuView: View {
                     VStack(spacing: 30) {
                         AppButton(image: .playButton, destination: GameView())
                         AppButton(image: .levelsButton, destination: EmptyView())
-                        AppButton(image: .shopButton, destination: EmptyView())
+                        AppButton(image: .shopButton, destination: ShopView())
                         AppButton(image: .settingsButton, destination: SettingsView())
                     }
                     .padding(.top, 64)

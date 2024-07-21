@@ -10,6 +10,8 @@ import AVFAudio
 
 struct SettingsView: View {
     // MARK: - Property -
+    @EnvironmentObject var appSettings: AppSettings
+    
     @State private var player: AVAudioPlayer?
     @State private var musicVolume: Double = 0.5
     @State private var soundVolume: Double = 0.5
@@ -70,9 +72,15 @@ struct SettingsView: View {
     // MARK: - Body -
     var body: some View {
         ZStack {
-            Image(.background)
-                .resizable()
-                .ignoresSafeArea()
+            if let savedBackground = appSettings.selectedBackground {
+                Image(savedBackground)
+                    .resizable()
+                    .ignoresSafeArea()
+            } else {
+                Image(.background)
+                    .resizable()
+                    .ignoresSafeArea()
+            }
             
             VStack {
                 Image(.settingsLogo)

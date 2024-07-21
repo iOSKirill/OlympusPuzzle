@@ -14,3 +14,8 @@
 // MARK: - Settings screen -
 "settings.title.music" = "MUSIC";
 "settings.title.sound" = "SOUND";
+
+// MARK: - Shop screen -
+"shop.title.buy" = "OPEN A NEW BACKGROUND FOR 200 COINS?";
+"shop.title.noCoins" = "YOU DON'T HAVE ENOUGH COINS. PLAY AND COLLECT COINS TO BUY A BACKGROUND.";
+"shop.title.block" = "BLOCK";
