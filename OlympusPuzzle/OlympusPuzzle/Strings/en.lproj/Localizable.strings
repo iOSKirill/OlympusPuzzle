@@ -33,3 +33,8 @@
 "achieve.subtitle.aphrodite" = "Aphrodite is the goddess of love, beauty and fertility in ancient Greek mythology. According to one version of the myth, she was born from sea foam when Uranus was castrated and his blood fell into the sea. Another version claims that she is the daughter of Zeus and Dione. Aphrodite was known for her extraordinary beauty, which attracted both gods and mortals. She was married to Hephaestus, the god of blacksmithing, but often had affairs with other gods, including Ares, the god of war.";
 "achieve.title.zeus" = "ZEUS";
 "achieve.subtitle.zeus" = "Zeus is the supreme god of ancient Greek mythology, ruler of Olympus and lord of the heavens. He was the son of Kronos and Rhea, and the youngest of six siblings. Zeus is known for his mighty strength and ability to control thunder and lightning. He established his reign by defeating the Titans and Giants in a great battle known as the Titanomachy. In addition to his power over natural phenomena, Zeus was also the patron of law, order and hospitality.";
+
+// MARK: - AchieveList screen -
+"achieveList.title.monsters" = "Monsters";
+"achieveList.title.gods" = "Gods";
+"achieveList.title.heroes" = "Heroes";

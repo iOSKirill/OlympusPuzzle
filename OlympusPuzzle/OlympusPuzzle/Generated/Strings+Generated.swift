@@ -40,6 +40,16 @@ internal enum L10n {
       internal static let zeus = L10n.tr("Localizable", "achieve.title.zeus", fallback: "ZEUS")
     }
   }
+  internal enum AchieveList {
+    internal enum Title {
+      /// Gods
+      internal static let gods = L10n.tr("Localizable", "achieveList.title.gods", fallback: "Gods")
+      /// Heroes
+      internal static let heroes = L10n.tr("Localizable", "achieveList.title.heroes", fallback: "Heroes")
+      /// Monsters
+      internal static let monsters = L10n.tr("Localizable", "achieveList.title.monsters", fallback: "Monsters")
+    }
+  }
   internal enum Onboarding {
     internal enum Title {
       /// Localizable.strings

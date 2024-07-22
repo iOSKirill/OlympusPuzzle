@@ -114,6 +114,8 @@ internal enum Asset {
     }
     internal static let logoName = ImageAsset(name: "LogoName")
     internal enum Logos {
+      internal static let clearAchievmentLogo = ImageAsset(name: "ClearAchievmentLogo")
+      internal static let collectionLogo = ImageAsset(name: "CollectionLogo")
       internal static let newAchieveLogo = ImageAsset(name: "NewAchieveLogo")
       internal static let orLogo = ImageAsset(name: "OrLogo")
       internal static let selectLevelLogo = ImageAsset(name: "SelectLevelLogo")

@@ -13,7 +13,7 @@ struct LevelsView: View {
     
     // MARK: - Monsters buttom -
     var mostersButton: some View {
-        NavigationLink(destination: EmptyView()) {
+        NavigationLink(destination: MonstersGameView()) {
             Image(.monstersButton)
         }
     }
