@@ -11,6 +11,7 @@ struct GameWinView: View {
     // MARK: - Property -
     @StateObject private var viewModel = GameViewModel()
     @Environment(\.dismiss) private var dismiss
+    var startNextLevel: () -> Void
     
     // MARK: - Body -
     var body: some View {
@@ -42,7 +43,7 @@ struct GameWinView: View {
                     Image(.orLogo)
                     
                     Button {
-                        
+                        startNextLevel()
                     } label: {
                         Image(.nextButton)
                     }
@@ -53,6 +54,7 @@ struct GameWinView: View {
     }
 }
 
+
 #Preview {
-    GameWinView()
+    GameWinView(startNextLevel: {})
 }

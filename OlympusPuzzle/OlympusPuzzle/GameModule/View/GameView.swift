@@ -39,7 +39,23 @@ class GameScene: SKScene {
         }
     }
 
+    var currentLevel = UserDefaults.standard.integer(forKey: "currentLevel") {
+        didSet {
+            UserDefaults.standard.set(currentLevel, forKey: "currentLevel")
+        }
+    }
+    
+    var coinTarget: Int {
+        return 10 + (currentLevel - 1) * 10
+    }
+
     override func didMove(to view: SKView) {
+        currentLevel = UserDefaults.standard.integer(forKey: "currentLevel")
+         if currentLevel == 0 {
+             currentLevel = 1 // Инициализация на 1 уровень, если значение 0
+             UserDefaults.standard.set(currentLevel, forKey: "currentLevel")
+         }
+        
         isHookMovingDown = false
         lastElementYPosition = nil
         roundCoins = 0
@@ -185,6 +201,7 @@ class GameScene: SKScene {
                 element.removeFromParent()
                 roundCoins += 10
                 coins += 10
+                NotificationCenter.default.post(name: .roundCoinsUpdated, object: nil, userInfo: ["roundCoins": roundCoins])
             }
             break
         }
@@ -228,7 +245,8 @@ struct GameView: View {
     @State private var timer: Timer?
     @State private var timeRemaining = 60
     @State private var isGameWin = false
-
+    @State private var currentLevel = UserDefaults.standard.integer(forKey: "currentLevel")
+    
     // MARK: - Body -
     var body: some View {
         ZStack {
@@ -239,15 +257,15 @@ struct GameView: View {
             VStack {
                 Spacer()
                 ZStack {
-                    Image(.time)
+                    Image("time")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(height: 55)
                         .padding(.bottom, 20)
                     
                     Text("\(timeFormatted(timeRemaining))")
-                        .font(.splineSansMonoMedium(of: 20))
-                        .foregroundColor(.cFFFFFF)
+                        .font(.system(size: 20))
+                        .foregroundColor(.white)
                         .padding(.leading, 40)
                         .padding(.bottom, 20)
                 }
@@ -256,7 +274,7 @@ struct GameView: View {
             if isGameOver {
                 GameOverView(isPresentedGameScreen: $isGameOver, isGameOver: $isGameOver)
             } else if isGameWin {
-                GameWinView()
+                GameWinView(startNextLevel: startNextLevel)
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -322,11 +340,39 @@ struct GameView: View {
     }
     
     func checkGameOutcome() {
-        if roundCoins > 20 {
+        let targetCoins = scene.coinTarget
+        print("Checking game outcome with roundCoins: \(roundCoins), coinTarget: \(targetCoins)")
+        
+        if roundCoins > targetCoins {
+            print("Game win condition met.")
             isGameWin = true
+            isGameOver = false
         } else {
+            print("Game over condition met.")
+            isGameWin = false
             isGameOver = true
         }
+        
+        // Логирование состояния игры
+        print("isGameWin: \(isGameWin), isGameOver: \(isGameOver)")
+        
+        // Принудительное обновление интерфейса
+        DispatchQueue.main.async {
+            if self.isGameOver {
+                NotificationCenter.default.post(name: .gameOver, object: nil)
+            }
+        }
+    }
+
+    
+    func startNextLevel() {
+        currentLevel += 1
+        UserDefaults.standard.set(currentLevel, forKey: "currentLevel")
+        isGameWin = false
+        isGameOver = false
+        roundCoins = 0  // Reset roundCoins for the new level
+        scene.currentLevel = currentLevel
+        startTimer()
     }
     
     func timeFormatted(_ totalSeconds: Int) -> String {
@@ -335,7 +381,6 @@ struct GameView: View {
         return String(format: "%02d:%02d", minutes, seconds)
     }
 }
-
 
 #Preview {
     GameView()

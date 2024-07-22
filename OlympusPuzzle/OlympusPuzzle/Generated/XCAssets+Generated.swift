@@ -117,8 +117,8 @@ internal enum Asset {
       internal static let rulesLogo = ImageAsset(name: "RulesLogo")
     }
     internal static let thumb = ImageAsset(name: "Thumb")
-    internal static let time = ImageAsset(name: "Time")
     internal static let track = ImageAsset(name: "Track")
+    internal static let time = ImageAsset(name: "time")
   }
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
