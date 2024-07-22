@@ -116,7 +116,7 @@ struct AchieveListView: View {
                     ScrollViewReader { proxy in
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
-                                ForEach(Array(achievementsManager.achievements.enumerated()), id: \.1.imageName) { index, achievement in
+                                ForEach(Array(achievementsManager.achievementsHero.enumerated()), id: \.1.imageName) { index, achievement in
                                     VStack {
                                         Image(achievement.imageName)
                                             .resizable()
@@ -138,7 +138,7 @@ struct AchieveListView: View {
                                 ForEach(0..<7, id: \.self) { index in
                                     Image(.clearAchievmentLogo)
                                         .padding(.horizontal, 13)
-                                        .id(achievementsManager.achievements.count + index) // Assign ID for placeholder items
+                                        .id(achievementsManager.achievementsHero.count + index) // Assign ID for placeholder items
                                 }
                             }
                         }
@@ -159,8 +159,8 @@ struct AchieveListView: View {
                         }
                         
                         Button {
-                            if currentIndex2 < achievementsManager.achievements.count + 6 { // Include placeholder items
-                                currentIndex2 = min(currentIndex2 + 3, achievementsManager.achievements.count + 6)
+                            if currentIndex2 < achievementsManager.achievementsHero.count + 6 { // Include placeholder items
+                                currentIndex2 = min(currentIndex2 + 3, achievementsManager.achievementsHero.count + 6)
                             }
                         } label: {
                             Image(.nextArrow)
@@ -181,7 +181,7 @@ struct AchieveListView: View {
                     ScrollViewReader { proxy in
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
-                                ForEach(Array(achievementsManager.achievements.enumerated()), id: \.1.imageName) { index, achievement in
+                                ForEach(Array(achievementsManager.achievementsGod.enumerated()), id: \.1.imageName) { index, achievement in
                                     VStack {
                                         Image(achievement.imageName)
                                             .resizable()
@@ -203,7 +203,7 @@ struct AchieveListView: View {
                                 ForEach(0..<7, id: \.self) { index in
                                     Image(.clearAchievmentLogo)
                                         .padding(.horizontal, 13)
-                                        .id(achievementsManager.achievements.count + index) // Assign ID for placeholder items
+                                        .id(achievementsManager.achievementsGod.count + index) // Assign ID for placeholder items
                                 }
                             }
                         }
@@ -224,8 +224,8 @@ struct AchieveListView: View {
                         }
                         
                         Button {
-                            if currentIndex3 < achievementsManager.achievements.count + 6 { // Include placeholder items
-                                currentIndex3 = min(currentIndex3 + 3, achievementsManager.achievements.count + 6)
+                            if currentIndex3 < achievementsManager.achievementsGod.count + 6 { // Include placeholder items
+                                currentIndex3 = min(currentIndex3 + 3, achievementsManager.achievementsGod.count + 6)
                             }
                         } label: {
                             Image(.nextArrow)

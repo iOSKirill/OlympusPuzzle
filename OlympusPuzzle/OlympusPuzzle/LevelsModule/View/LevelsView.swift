@@ -20,14 +20,14 @@ struct LevelsView: View {
     
     // MARK: - Heroes buttom -
     var heroesButton: some View {
-        NavigationLink(destination: EmptyView()) {
+        NavigationLink(destination: HeroesGameView()) {
             Image(.heroesButton)
         }
     }
     
     // MARK: - Gods buttom -
     var godsButton: some View {
-        NavigationLink(destination: EmptyView()) {
+        NavigationLink(destination: GodsGameView()) {
             Image(.godsButton)
         }
     }
