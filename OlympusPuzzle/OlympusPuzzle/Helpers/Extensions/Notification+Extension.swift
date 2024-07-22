@@ -12,4 +12,5 @@ extension Notification.Name {
     static let gameOver = Notification.Name("gameOver")
     static let restartGame = Notification.Name("restartGame")
     static let roundCoinsUpdated = Notification.Name("roundCoinsUpdated")
+    static let startNextLevel = Notification.Name("startNextLevel")
 }

@@ -36,7 +36,7 @@ struct MenuView: View {
                     Image(.logoName)
                      
                     VStack(spacing: 30) {
-                        AppButton(image: .playButton, destination: GameView())
+                        AppButton(image: .playButton, destination: MonstersGameView())
                         AppButton(image: .levelsButton, destination: LevelsView())
                         AppButton(image: .shopButton, destination: ShopView())
                         AppButton(image: .settingsButton, destination: SettingsView())

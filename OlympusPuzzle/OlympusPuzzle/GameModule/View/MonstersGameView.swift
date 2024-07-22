@@ -1,5 +1,5 @@
 //
-//  GameView.swift
+//  MonstersGameView.swift
 //  OlympusPuzzle
 //
 //  Created by Kirill Manuilenko on 19.07.24.
@@ -8,7 +8,7 @@
 import SpriteKit
 import SwiftUI
 
-class GameScene: SKScene {
+class MonstersGameScene: SKScene {
     // MARK: - Property -
     var hook: SKSpriteNode!
     var line: SKSpriteNode!
@@ -56,6 +56,19 @@ class GameScene: SKScene {
              UserDefaults.standard.set(currentLevel, forKey: "currentLevel")
          }
         
+        isHookMovingDown = false
+        lastElementYPosition = nil
+        roundCoins = 0
+        
+        removeAllChildren()
+        removeAllActions()
+        setupScene()
+    }
+    
+    func startNextLevel() {
+        currentLevel += 1
+        UserDefaults.standard.set(currentLevel, forKey: "currentLevel")
+     
         isHookMovingDown = false
         lastElementYPosition = nil
         roundCoins = 0
@@ -234,13 +247,13 @@ class GameScene: SKScene {
 }
 
 
-struct GameView: View {
+struct MonstersGameView: View {
     // MARK: - Property -
     @EnvironmentObject var appSettings: AppSettings
     
     @State private var coins = UserDefaults.standard.integer(forKey: "coins")
     @State private var roundCoins = 0
-    @State private var scene = GameScene(size: CGSize(width: 300, height: 600))
+    @State private var scene = MonstersGameScene(size: CGSize(width: 300, height: 600))
     @State private var isGameOver = false
     @State private var timer: Timer?
     @State private var timeRemaining = 60
@@ -311,8 +324,12 @@ struct GameView: View {
                 scene.resetScene()
                 startTimer()
             }
+            NotificationCenter.default.addObserver(forName: .startNextLevel, object: nil, queue: .main) { _ in
+                startNextLevel()
+            }
             startTimer()
         }
+
         .onDisappear {
             NotificationCenter.default.removeObserver(self, name: .coinsUpdated, object: nil)
             NotificationCenter.default.removeObserver(self, name: .roundCoinsUpdated, object: nil)
@@ -372,6 +389,7 @@ struct GameView: View {
         isGameOver = false
         roundCoins = 0  // Reset roundCoins for the new level
         scene.currentLevel = currentLevel
+        scene.startNextLevel()
         startTimer()
     }
     
@@ -383,5 +401,5 @@ struct GameView: View {
 }
 
 #Preview {
-    GameView()
+    MonstersGameView()
 }

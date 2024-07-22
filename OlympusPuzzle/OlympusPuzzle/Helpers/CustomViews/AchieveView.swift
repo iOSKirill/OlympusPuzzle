@@ -1,0 +1,18 @@
+//
+//  AchieveView.swift
+//  OlympusPuzzle
+//
+//  Created by Kirill Manuilenko on 22.07.24.
+//
+
+import SwiftUI
+
+struct AchieveView: View {
+    var body: some View {
+        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    }
+}
+
+#Preview {
+    AchieveView()
+}
