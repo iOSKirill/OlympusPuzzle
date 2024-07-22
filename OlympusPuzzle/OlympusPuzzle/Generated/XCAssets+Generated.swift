@@ -40,6 +40,14 @@ internal enum Asset {
     internal static let с481571 = ColorAsset(name: "с481571")
   }
   internal enum Images {
+    internal enum Achieves {
+      internal static let achilles = ImageAsset(name: "Achilles")
+      internal static let aphrodite = ImageAsset(name: "Aphrodite")
+      internal static let hercules = ImageAsset(name: "Hercules")
+      internal static let jellyfish = ImageAsset(name: "Jellyfish")
+      internal static let nymph = ImageAsset(name: "Nymph")
+      internal static let zeus = ImageAsset(name: "Zeus")
+    }
     internal enum Arrows {
       internal static let backArrow = ImageAsset(name: "BackArrow")
       internal static let nextArrow = ImageAsset(name: "NextArrow")
@@ -55,6 +63,7 @@ internal enum Asset {
       internal static let background6 = ImageAsset(name: "Background6")
       internal static let background7 = ImageAsset(name: "Background7")
       internal static let background8 = ImageAsset(name: "Background8")
+      internal static let backgroundAchieve = ImageAsset(name: "BackgroundAchieve")
       internal static let backgroundLightning = ImageAsset(name: "BackgroundLightning")
       internal static let backgroundShadow = ImageAsset(name: "BackgroundShadow")
       internal static let backgroundWin = ImageAsset(name: "BackgroundWin")
@@ -97,8 +106,17 @@ internal enum Asset {
       internal static let lightning1 = ImageAsset(name: "Lightning1")
       internal static let lightning2 = ImageAsset(name: "lightning2")
     }
+    internal static let listLeft = ImageAsset(name: "ListLeft")
+    internal static let listRight = ImageAsset(name: "ListRight")
+    internal enum Lists {
+      internal static let listLeft = ImageAsset(name: "ListLeft")
+      internal static let listRight = ImageAsset(name: "ListRight")
+    }
     internal static let logoName = ImageAsset(name: "LogoName")
     internal enum Logos {
+      internal static let clearAchievmentLogo = ImageAsset(name: "ClearAchievmentLogo")
+      internal static let collectionLogo = ImageAsset(name: "CollectionLogo")
+      internal static let newAchieveLogo = ImageAsset(name: "NewAchieveLogo")
       internal static let orLogo = ImageAsset(name: "OrLogo")
       internal static let selectLevelLogo = ImageAsset(name: "SelectLevelLogo")
       internal static let settingsLogo = ImageAsset(name: "SettingsLogo")
@@ -117,8 +135,8 @@ internal enum Asset {
       internal static let rulesLogo = ImageAsset(name: "RulesLogo")
     }
     internal static let thumb = ImageAsset(name: "Thumb")
-    internal static let time = ImageAsset(name: "Time")
     internal static let track = ImageAsset(name: "Track")
+    internal static let time = ImageAsset(name: "time")
   }
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

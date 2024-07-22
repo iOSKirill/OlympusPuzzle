@@ -10,6 +10,7 @@ import SwiftUI
 struct MenuView: View {
     // MARK: - Property -
     @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var achievementsManager: AchievementsManager
     
     // MARK: - Initialization -
     init() {
@@ -36,7 +37,7 @@ struct MenuView: View {
                     Image(.logoName)
                      
                     VStack(spacing: 30) {
-                        AppButton(image: .playButton, destination: GameView())
+                        AppButton(image: .playButton, destination: MonstersGameView())
                         AppButton(image: .levelsButton, destination: LevelsView())
                         AppButton(image: .shopButton, destination: ShopView())
                         AppButton(image: .settingsButton, destination: SettingsView())
@@ -49,7 +50,8 @@ struct MenuView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
-                        EmptyView()
+                        AchieveListView()
+                           
                     } label: {
                         Image(.collectionButton)
                             .resizable()

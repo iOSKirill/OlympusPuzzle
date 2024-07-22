@@ -11,12 +11,15 @@ import SwiftUI
 struct OlympusPuzzleApp: App {
     // MARK: - Property -
     @StateObject private var appSettings = AppSettings()
+    @StateObject private var achievementsManager = AchievementsManager()
+
     
     // MARK: - Body -
     var body: some Scene {
         WindowGroup {
             LaunchView()
                 .environmentObject(appSettings)
+                .environmentObject(achievementsManager)
         }
     }
 }

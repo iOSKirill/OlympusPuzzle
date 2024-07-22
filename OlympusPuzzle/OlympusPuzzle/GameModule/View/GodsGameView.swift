@@ -1,14 +1,14 @@
 //
-//  GameView.swift
+//  GodsGameView.swift
 //  OlympusPuzzle
 //
-//  Created by Kirill Manuilenko on 19.07.24.
+//  Created by Kirill Manuilenko on 22.07.24.
 //
 
 import SpriteKit
 import SwiftUI
 
-class GameScene: SKScene {
+class GodsGameScene: SKScene {
     // MARK: - Property -
     var hook: SKSpriteNode!
     var line: SKSpriteNode!
@@ -20,29 +20,58 @@ class GameScene: SKScene {
     
     var isHookMovingDown = false
 
-    var coins = 0 {
+    var godCoins = 0 {
         didSet {
-            UserDefaults.standard.set(coins, forKey: "coins")
-            NotificationCenter.default.post(name: .coinsUpdated, object: nil, userInfo: ["coins": coins])
+            UserDefaults.standard.set(godCoins, forKey: "coins")
+            NotificationCenter.default.post(name: .coinsUpdated, object: nil, userInfo: ["coins": godCoins])
         }
     }
     
-    var roundCoins = 0 {
+    var roundGodCoins = 0 {
         didSet {
-            NotificationCenter.default.post(name: .roundCoinsUpdated, object: nil, userInfo: ["roundCoins": roundCoins])
+            NotificationCenter.default.post(name: .roundGodCoinsUpdated, object: nil, userInfo: ["roundGodCoins": roundGodCoins])
         }
     }
 
-    var isGameOver = false {
+    var isGodGameOver = false {
         didSet {
-            NotificationCenter.default.post(name: .gameOver, object: nil)
+            NotificationCenter.default.post(name: .godGameOver, object: nil)
         }
+    }
+
+    var currentGodLevel = UserDefaults.standard.integer(forKey: "currentGodLevel") {
+        didSet {
+            UserDefaults.standard.set(currentGodLevel, forKey: "currentGodLevel")
+        }
+    }
+    
+    var godCoinTarget: Int {
+        return 10 + (currentGodLevel - 1) * 10
     }
 
     override func didMove(to view: SKView) {
+        currentGodLevel = UserDefaults.standard.integer(forKey: "currentGodLevel")
+         if currentGodLevel == 0 {
+             currentGodLevel = 1 // Инициализация на 1 уровень, если значение 0
+             UserDefaults.standard.set(currentGodLevel, forKey: "currentGodLevel")
+         }
+        
         isHookMovingDown = false
         lastElementYPosition = nil
-        roundCoins = 0
+        roundGodCoins = 0
+        
+        removeAllChildren()
+        removeAllActions()
+        setupScene()
+    }
+    
+    func startNextGodLevel() {
+        currentGodLevel += 1
+        UserDefaults.standard.set(currentGodLevel, forKey: "currentGodLevel")
+     
+        isHookMovingDown = false
+        lastElementYPosition = nil
+        roundGodCoins = 0
         
         removeAllChildren()
         removeAllActions()
@@ -68,8 +97,8 @@ class GameScene: SKScene {
         
         // Setup coin label
         
-        // Load saved coins
-        coins = UserDefaults.standard.integer(forKey: "coins")
+        // Load saved god coins
+        godCoins = UserDefaults.standard.integer(forKey: "coins")
         
         // Spawn elements
         run(SKAction.repeatForever(
@@ -96,7 +125,7 @@ class GameScene: SKScene {
      }
 
     func spawnElement() {
-        let elements = ["Diamond1", "Diamond2"]
+        let elements = ["Diamond5", "Diamond6"]
         let harmfulElements = ["Enemy1", "Enemy2"]
         
         // Adjust probability: 80% chance for regular elements, 20% for harmful elements
@@ -120,18 +149,27 @@ class GameScene: SKScene {
     }
 
     func generateElementYPosition(for element: SKSpriteNode) -> CGFloat {
-        let minY = element.size.height / 2
-        let maxY = size.height / 2 - element.size.height / 2
+        // Определяем диапазон для позиции Y элементов
+        let hookY = hook.position.y
+        let elementHeight = element.size.height
+        let minY = max(elementHeight / 2, hookY - elementSpacing)
+        let maxY = min(size.height - elementHeight / 2, hookY + elementSpacing)
+        
+        // Убедимся, что minY не превышает maxY
+        if minY > maxY {
+            return hookY // если диапазон некорректный, возвращаем текущую позицию крючка
+        }
+
         var yPosition: CGFloat
         
-        // Generate position in the lower half of the screen
+        // Генерируем случайную позицию в пределах диапазона
         yPosition = CGFloat.random(in: minY...maxY)
 
-        // Ensure minimum spacing between elements
+        // Обеспечиваем минимальное расстояние между элементами
         if let lastY = lastElementYPosition {
             if abs(lastY - yPosition) < elementSpacing {
                 yPosition = lastY - elementSpacing
-                // Ensure element stays within screen bounds
+                // Убеждаемся, что элемент остается в пределах экрана
                 if yPosition - element.size.height / 2 < minY {
                     yPosition = minY
                 }
@@ -141,7 +179,6 @@ class GameScene: SKScene {
         
         return yPosition
     }
-
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if !isHookMovingDown {
@@ -167,7 +204,7 @@ class GameScene: SKScene {
         for element in children where element != hook && element != line && element.name != "background" && element.frame.intersects(hook.frame) {
             if element.name == "Enemy1" || element.name == "Enemy2" {
                 // Set game over state
-                isGameOver = true
+                isGodGameOver = true
                 
                 // Remove the line
                 self.line.removeFromParent()
@@ -183,8 +220,9 @@ class GameScene: SKScene {
             } else {
                 // Regular element collected
                 element.removeFromParent()
-                roundCoins += 10
-                coins += 10
+                roundGodCoins += 10
+                godCoins += 10
+                NotificationCenter.default.post(name: .roundGodCoinsUpdated, object: nil, userInfo: ["roundGodCoins": roundGodCoins])
             }
             break
         }
@@ -204,10 +242,10 @@ class GameScene: SKScene {
     }
 
     func resetScene() {
-        isGameOver = false
+        isGodGameOver = false
         isHookMovingDown = false
         lastElementYPosition = nil
-        roundCoins = 0
+        roundGodCoins = 0
         
         removeAllChildren()
         removeAllActions()
@@ -217,19 +255,35 @@ class GameScene: SKScene {
 }
 
 
-struct GameView: View {
+struct GodsGameView: View {
     // MARK: - Property -
     @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var achievementsManager: AchievementsManager
     
-    @State private var coins = UserDefaults.standard.integer(forKey: "coins")
-    @State private var roundCoins = 0
-    @State private var scene = GameScene(size: CGSize(width: 300, height: 600))
-    @State private var isGameOver = false
+    @State private var godCoins = UserDefaults.standard.integer(forKey: "coins")
+    @State private var roundGodCoins = 0
+    @State private var scene = GodsGameScene(size: CGSize(width: 300, height: 600))
+    @State private var isGodGameOver = false
     @State private var timer: Timer?
     @State private var timeRemaining = 60
-    @State private var isGameWin = false
-
-    // MARK: - Body -
+    @State private var isGodGameWin = false
+    @State private var currentGodLevel = UserDefaults.standard.integer(forKey: "currentGodLevel")
+    @State private var showAchieveView = false
+    @State private var currentAchievement: Achievement?
+    
+    private let achievements: [Achievement] = [
+        Achievement(
+            imageName: "Aphrodite",
+            title: L10n.Achieve.Title.aphrodite,
+            subtitle: L10n.Achieve.Subtitle.aphrodite
+        ),
+        Achievement(
+            imageName: "Zeus",
+            title: L10n.Achieve.Title.zeus,
+            subtitle: L10n.Achieve.Subtitle.zeus
+        ),
+    ]
+    
     var body: some View {
         ZStack {
             SpriteView(scene: scene)
@@ -246,60 +300,95 @@ struct GameView: View {
                         .padding(.bottom, 20)
                     
                     Text("\(timeFormatted(timeRemaining))")
-                        .font(.splineSansMonoMedium(of: 20))
-                        .foregroundColor(.cFFFFFF)
+                        .font(.system(size: 20))
+                        .foregroundColor(.white)
                         .padding(.leading, 40)
                         .padding(.bottom, 20)
                 }
             }
             
-            if isGameOver {
-                GameOverView(isPresentedGameScreen: $isGameOver, isGameOver: $isGameOver)
-            } else if isGameWin {
-                GameWinView()
+            if isGodGameOver {
+                GameOverView(isPresentedGameScreen: $isGodGameOver, isGameOver: $isGodGameOver)
+            } else if isGodGameWin {
+                GameWinView(startNextLevel: {
+                    print("Current level: \(currentGodLevel), Achievements count: \(achievements.count)")
+                    
+                    if currentGodLevel == 0 {
+                        currentGodLevel = 1
+                        UserDefaults.standard.set(currentGodLevel, forKey: "currentGodLevel")
+                    }
+                    if achievements.indices.contains(currentGodLevel - 1) {
+                        print("Index \(currentGodLevel - 1) is valid.")
+                        currentAchievement = achievements[currentGodLevel - 1]
+                    } else {
+                        print("Index \(currentGodLevel - 1) is invalid, using default achievement.")
+                        currentAchievement = Achievement(
+                            imageName: "Zeus",
+                            title: L10n.Achieve.Title.zeus,
+                            subtitle: L10n.Achieve.Subtitle.zeus
+                        )
+                    }
+                    showAchieveView = true
+                })
+            }
+            
+            if showAchieveView, let achievement = currentAchievement {
+                AchieveView(
+                    showAchieveView: $showAchieveView,
+                    closeVoid: {
+                        achievementsManager.addAchievementGod(achievement)
+                        startNextGodLevel()
+                    },
+                    image: achievement.imageName,
+                    title: achievement.title,
+                    subtitle: achievement.subtitle
+                )
             }
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                if !isGameOver && !isGameWin {
+                if !isGodGameOver && !isGodGameWin {
                     BackButton()
                 }
             }
             ToolbarItem(placement: .navigationBarTrailing) {
-                if !isGameOver && !isGameWin {
-                    ToolbarCoinView(coins: $coins)
+                if !isGodGameOver && !isGodGameWin {
+                    ToolbarCoinView(coins: $godCoins)
                 }
             }
         }
         .onAppear {
             NotificationCenter.default.addObserver(forName: .coinsUpdated, object: nil, queue: .main) { notification in
-                if let updatedCoins = notification.userInfo?["coins"] as? Int {
-                    coins = updatedCoins
+                if let updatedGodCoins = notification.userInfo?["coins"] as? Int {
+                    godCoins = updatedGodCoins
                 }
             }
-            NotificationCenter.default.addObserver(forName: .roundCoinsUpdated, object: nil, queue: .main) { notification in
-                if let updatedRoundCoins = notification.userInfo?["roundCoins"] as? Int {
-                    roundCoins = updatedRoundCoins
+            NotificationCenter.default.addObserver(forName: .roundGodCoinsUpdated, object: nil, queue: .main) { notification in
+                if let updatedRoundGodCoins = notification.userInfo?["roundGodCoins"] as? Int {
+                    roundGodCoins = updatedRoundGodCoins
                 }
             }
-            NotificationCenter.default.addObserver(forName: .gameOver, object: nil, queue: .main) { _ in
-                isGameOver = true
+            NotificationCenter.default.addObserver(forName: .godGameOver, object: nil, queue: .main) { _ in
+                isGodGameOver = true
                 stopTimer()
             }
-            NotificationCenter.default.addObserver(forName: .restartGame, object: nil, queue: .main) { _ in
-                isGameOver = false
-                isGameWin = false
+            NotificationCenter.default.addObserver(forName: .restartHeroGame, object: nil, queue: .main) { _ in
+                isGodGameOver = false
+                isGodGameWin = false
                 scene.resetScene()
                 startTimer()
+            }
+            NotificationCenter.default.addObserver(forName: .startNextGodLevel, object: nil, queue: .main) { _ in
+                startNextGodLevel()
             }
             startTimer()
         }
         .onDisappear {
             NotificationCenter.default.removeObserver(self, name: .coinsUpdated, object: nil)
-            NotificationCenter.default.removeObserver(self, name: .roundCoinsUpdated, object: nil)
-            NotificationCenter.default.removeObserver(self, name: .gameOver, object: nil)
-            NotificationCenter.default.removeObserver(self, name: .restartGame, object: nil)
+            NotificationCenter.default.removeObserver(self, name: .roundGodCoinsUpdated, object: nil)
+            NotificationCenter.default.removeObserver(self, name: .godGameOver, object: nil)
+            NotificationCenter.default.removeObserver(self, name: .restartHeroGame, object: nil)
             stopTimer()
         }
     }
@@ -311,7 +400,7 @@ struct GameView: View {
                 timeRemaining -= 1
             } else {
                 stopTimer()
-                checkGameOutcome()
+                checkGodGameOutcome()
             }
         }
     }
@@ -321,12 +410,40 @@ struct GameView: View {
         timer = nil
     }
     
-    func checkGameOutcome() {
-        if roundCoins > 20 {
-            isGameWin = true
+    func checkGodGameOutcome() {
+        let targetGodCoins = scene.godCoinTarget
+        print("Checking game outcome with roundGodCoins: \(roundGodCoins), godCoinTarget: \(targetGodCoins)")
+        
+        if roundGodCoins > targetGodCoins {
+            print("Game win condition met.")
+            isGodGameWin = true
+            isGodGameOver = false
         } else {
-            isGameOver = true
+            print("Game over condition met.")
+            isGodGameWin = false
+            isGodGameOver = true
         }
+        
+        // Логирование состояния игры
+        print("isGodGameWin: \(isGodGameWin), isGodGameOver: \(isGodGameOver)")
+        
+        // Принудительное обновление интерфейса
+        DispatchQueue.main.async {
+            if self.isGodGameOver {
+                NotificationCenter.default.post(name: .godGameOver, object: nil)
+            }
+        }
+    }
+    
+    func startNextGodLevel() {
+        currentGodLevel += 1
+        UserDefaults.standard.set(currentGodLevel, forKey: "currentGodLevel")
+        isGodGameWin = false
+        isGodGameOver = false
+        roundGodCoins = 0  // Reset roundGodCoins for the new level
+        scene.currentGodLevel = currentGodLevel
+        scene.startNextGodLevel()
+        startTimer()
     }
     
     func timeFormatted(_ totalSeconds: Int) -> String {
@@ -336,7 +453,6 @@ struct GameView: View {
     }
 }
 
-
 #Preview {
-    GameView()
+    GodsGameView()
 }
