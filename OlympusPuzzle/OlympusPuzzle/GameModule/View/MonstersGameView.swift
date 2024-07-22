@@ -256,86 +256,10 @@ class MonstersGameScene: SKScene {
     }
 }
 
-
-
-extension UserDefaults {
-    func setAchievement(_ imageName: String, forKey key: String) {
-        var achievements = stringArray(forKey: key) ?? []
-        if !achievements.contains(imageName) {
-            achievements.append(imageName)
-            set(achievements, forKey: key)
-        }
-    }
-
-    func getAchievements(forKey key: String) -> [String] {
-        return stringArray(forKey: key) ?? []
-    }
-}
-
-// MARK: - Achievement Structure -
-
-struct Achievement {
-    let imageName: String
-    let title: String
-    let subtitle: String
-}
-
-// MARK: - Achievements View -
-
-struct AchievementsView: View {
-    @State private var unlockedAchievements: [String] = UserDefaults.standard.getAchievements(forKey: "unlockedAchievements")
-
-    var body: some View {
-        VStack {
-            Text("Achievements")
-                .font(.largeTitle)
-                .padding()
-
-            Grid {
-                ForEach(0..<5, id: \.self) { index in
-                    if index < unlockedAchievements.count {
-                        let imageName = unlockedAchievements[index]
-                        Image(imageName)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 100, height: 100)
-                            .border(Color.gray, width: 1)
-                    } else {
-                        Rectangle()
-                            .fill(Color.clear)
-                            .frame(width: 100, height: 100)
-                            .border(Color.gray, width: 1)
-                    }
-                }
-            }
-        }
-    }
-}
-
-// MARK: - Grid View -
-
-struct Grid<Content: View>: View {
-    private let columns: [GridItem]
-    private let content: Content
-
-    init(@ViewBuilder content: () -> Content) {
-        self.columns = Array(repeating: .init(.flexible()), count: 5)
-        self.content = content()
-    }
-
-    var body: some View {
-        LazyVGrid(columns: columns, spacing: 20) {
-            content
-        }
-        .padding()
-    }
-}
-
-// MARK: - MonstersGameView -
-
 struct MonstersGameView: View {
-    // MARK: - Properties -
+    // MARK: - Property -
     @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var achievementsManager: AchievementsManager
     
     @State private var coins = UserDefaults.standard.integer(forKey: "coins")
     @State private var roundCoins = 0
@@ -347,22 +271,20 @@ struct MonstersGameView: View {
     @State private var currentLevel = UserDefaults.standard.integer(forKey: "currentLevel")
     @State private var showAchieveView = false
     @State private var currentAchievement: Achievement?
-    @State private var showAchievements = false
     
     private let achievements: [Achievement] = [
         Achievement(
-            imageName: "jellyfish",
+            imageName: "Jellyfish",
             title: L10n.Achieve.Title.meduse,
             subtitle: L10n.Achieve.Subtitle.meduse
         ),
         Achievement(
-            imageName: "nymph",
+            imageName: "Nymph",
             title: L10n.Achieve.Title.nymph,
             subtitle: L10n.Achieve.Subtitle.nymph
         ),
     ]
     
-    // MARK: - Body -
     var body: some View {
         ZStack {
             SpriteView(scene: scene)
@@ -393,16 +315,16 @@ struct MonstersGameView: View {
                     print("Current level: \(currentLevel), Achievements count: \(achievements.count)")
                     
                     if currentLevel == 0 {
-                          currentLevel = 1
-                          UserDefaults.standard.set(currentLevel, forKey: "currentLevel")
-                      }
+                        currentLevel = 1
+                        UserDefaults.standard.set(currentLevel, forKey: "currentLevel")
+                    }
                     if achievements.indices.contains(currentLevel - 1) {
                         print("Index \(currentLevel - 1) is valid.")
                         currentAchievement = achievements[currentLevel - 1]
                     } else {
                         print("Index \(currentLevel - 1) is invalid, using default achievement.")
                         currentAchievement = Achievement(
-                            imageName: "nymph",
+                            imageName: "Nymph",
                             title: L10n.Achieve.Title.nymph,
                             subtitle: L10n.Achieve.Subtitle.nymph
                         )
@@ -414,7 +336,10 @@ struct MonstersGameView: View {
             if showAchieveView, let achievement = currentAchievement {
                 AchieveView(
                     showAchieveView: $showAchieveView,
-                    closeVoid: startNextLevel,
+                    closeVoid: {
+                        achievementsManager.addAchievement(achievement)
+                        startNextLevel()
+                    },
                     image: achievement.imageName,
                     title: achievement.title,
                     subtitle: achievement.subtitle
@@ -510,11 +435,6 @@ struct MonstersGameView: View {
             }
         }
     }
-
-    func unlockAchievement(_ achievement: Achievement) {
-        let imageName = achievement.imageName
-        UserDefaults.standard.setAchievement(imageName, forKey: "unlockedAchievements")
-    }
     
     func startNextLevel() {
         currentLevel += 1
@@ -533,6 +453,7 @@ struct MonstersGameView: View {
         return String(format: "%02d:%02d", minutes, seconds)
     }
 }
+
 #Preview {
     MonstersGameView()
 }

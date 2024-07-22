@@ -7,9 +7,22 @@
 
 import SwiftUI
 
+import Foundation
+import Combine
+
+class AchievementsManager: ObservableObject {
+    @Published var achievements: [Achievement] = UserDefaults.standard.loadAchievements()
+    
+    func addAchievement(_ achievement: Achievement) {
+        achievements.append(achievement)
+        UserDefaults.standard.saveAchievements(achievements)
+    }
+}
+
 struct MenuView: View {
     // MARK: - Property -
     @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var achievementsManager: AchievementsManager
     
     // MARK: - Initialization -
     init() {
@@ -49,7 +62,8 @@ struct MenuView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
-                        AchievementsView()
+                        AchieveListView()
+                           
                     } label: {
                         Image(.collectionButton)
                             .resizable()
