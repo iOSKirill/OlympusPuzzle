@@ -149,18 +149,27 @@ class MonstersGameScene: SKScene {
     }
 
     func generateElementYPosition(for element: SKSpriteNode) -> CGFloat {
-        let minY = element.size.height / 2
-        let maxY = size.height / 2 - element.size.height / 2
+        // Определяем диапазон для позиции Y элементов
+        let hookY = hook.position.y
+        let elementHeight = element.size.height
+        let minY = max(elementHeight / 2, hookY - elementSpacing)
+        let maxY = min(size.height - elementHeight / 2, hookY + elementSpacing)
+        
+        // Убедимся, что minY не превышает maxY
+        if minY > maxY {
+            return hookY // если диапазон некорректный, возвращаем текущую позицию крючка
+        }
+
         var yPosition: CGFloat
         
-        // Generate position in the lower half of the screen
+        // Генерируем случайную позицию в пределах диапазона
         yPosition = CGFloat.random(in: minY...maxY)
 
-        // Ensure minimum spacing between elements
+        // Обеспечиваем минимальное расстояние между элементами
         if let lastY = lastElementYPosition {
             if abs(lastY - yPosition) < elementSpacing {
                 yPosition = lastY - elementSpacing
-                // Ensure element stays within screen bounds
+                // Убеждаемся, что элемент остается в пределах экрана
                 if yPosition - element.size.height / 2 < minY {
                     yPosition = minY
                 }
@@ -170,6 +179,7 @@ class MonstersGameScene: SKScene {
         
         return yPosition
     }
+
 
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -247,8 +257,84 @@ class MonstersGameScene: SKScene {
 }
 
 
+
+extension UserDefaults {
+    func setAchievement(_ imageName: String, forKey key: String) {
+        var achievements = stringArray(forKey: key) ?? []
+        if !achievements.contains(imageName) {
+            achievements.append(imageName)
+            set(achievements, forKey: key)
+        }
+    }
+
+    func getAchievements(forKey key: String) -> [String] {
+        return stringArray(forKey: key) ?? []
+    }
+}
+
+// MARK: - Achievement Structure -
+
+struct Achievement {
+    let imageName: String
+    let title: String
+    let subtitle: String
+}
+
+// MARK: - Achievements View -
+
+struct AchievementsView: View {
+    @State private var unlockedAchievements: [String] = UserDefaults.standard.getAchievements(forKey: "unlockedAchievements")
+
+    var body: some View {
+        VStack {
+            Text("Achievements")
+                .font(.largeTitle)
+                .padding()
+
+            Grid {
+                ForEach(0..<5, id: \.self) { index in
+                    if index < unlockedAchievements.count {
+                        let imageName = unlockedAchievements[index]
+                        Image(imageName)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 100, height: 100)
+                            .border(Color.gray, width: 1)
+                    } else {
+                        Rectangle()
+                            .fill(Color.clear)
+                            .frame(width: 100, height: 100)
+                            .border(Color.gray, width: 1)
+                    }
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Grid View -
+
+struct Grid<Content: View>: View {
+    private let columns: [GridItem]
+    private let content: Content
+
+    init(@ViewBuilder content: () -> Content) {
+        self.columns = Array(repeating: .init(.flexible()), count: 5)
+        self.content = content()
+    }
+
+    var body: some View {
+        LazyVGrid(columns: columns, spacing: 20) {
+            content
+        }
+        .padding()
+    }
+}
+
+// MARK: - MonstersGameView -
+
 struct MonstersGameView: View {
-    // MARK: - Property -
+    // MARK: - Properties -
     @EnvironmentObject var appSettings: AppSettings
     
     @State private var coins = UserDefaults.standard.integer(forKey: "coins")
@@ -259,6 +345,22 @@ struct MonstersGameView: View {
     @State private var timeRemaining = 60
     @State private var isGameWin = false
     @State private var currentLevel = UserDefaults.standard.integer(forKey: "currentLevel")
+    @State private var showAchieveView = false
+    @State private var currentAchievement: Achievement?
+    @State private var showAchievements = false
+    
+    private let achievements: [Achievement] = [
+        Achievement(
+            imageName: "jellyfish",
+            title: L10n.Achieve.Title.meduse,
+            subtitle: L10n.Achieve.Subtitle.meduse
+        ),
+        Achievement(
+            imageName: "nymph",
+            title: L10n.Achieve.Title.nymph,
+            subtitle: L10n.Achieve.Subtitle.nymph
+        ),
+    ]
     
     // MARK: - Body -
     var body: some View {
@@ -270,7 +372,7 @@ struct MonstersGameView: View {
             VStack {
                 Spacer()
                 ZStack {
-                    Image("time")
+                    Image(.time)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(height: 55)
@@ -287,7 +389,36 @@ struct MonstersGameView: View {
             if isGameOver {
                 GameOverView(isPresentedGameScreen: $isGameOver, isGameOver: $isGameOver)
             } else if isGameWin {
-                GameWinView(startNextLevel: startNextLevel)
+                GameWinView(startNextLevel: {
+                    print("Current level: \(currentLevel), Achievements count: \(achievements.count)")
+                    
+                    if currentLevel == 0 {
+                          currentLevel = 1
+                          UserDefaults.standard.set(currentLevel, forKey: "currentLevel")
+                      }
+                    if achievements.indices.contains(currentLevel - 1) {
+                        print("Index \(currentLevel - 1) is valid.")
+                        currentAchievement = achievements[currentLevel - 1]
+                    } else {
+                        print("Index \(currentLevel - 1) is invalid, using default achievement.")
+                        currentAchievement = Achievement(
+                            imageName: "nymph",
+                            title: L10n.Achieve.Title.nymph,
+                            subtitle: L10n.Achieve.Subtitle.nymph
+                        )
+                    }
+                    showAchieveView = true
+                })
+            }
+            
+            if showAchieveView, let achievement = currentAchievement {
+                AchieveView(
+                    showAchieveView: $showAchieveView,
+                    closeVoid: startNextLevel,
+                    image: achievement.imageName,
+                    title: achievement.title,
+                    subtitle: achievement.subtitle
+                )
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -329,7 +460,6 @@ struct MonstersGameView: View {
             }
             startTimer()
         }
-
         .onDisappear {
             NotificationCenter.default.removeObserver(self, name: .coinsUpdated, object: nil)
             NotificationCenter.default.removeObserver(self, name: .roundCoinsUpdated, object: nil)
@@ -381,6 +511,10 @@ struct MonstersGameView: View {
         }
     }
 
+    func unlockAchievement(_ achievement: Achievement) {
+        let imageName = achievement.imageName
+        UserDefaults.standard.setAchievement(imageName, forKey: "unlockedAchievements")
+    }
     
     func startNextLevel() {
         currentLevel += 1
@@ -399,7 +533,6 @@ struct MonstersGameView: View {
         return String(format: "%02d:%02d", minutes, seconds)
     }
 }
-
 #Preview {
     MonstersGameView()
 }

@@ -49,7 +49,7 @@ struct MenuView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
-                        EmptyView()
+                        AchievementsView()
                     } label: {
                         Image(.collectionButton)
                             .resizable()
