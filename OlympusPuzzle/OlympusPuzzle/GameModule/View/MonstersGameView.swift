@@ -83,9 +83,11 @@ class MonstersGameScene: SKScene {
         updateBackground()
         
         // Setup line
+        // Setup line
         line = SKSpriteNode(imageNamed: "FishingLine")
         line.anchorPoint = CGPoint(x: 0.5, y: 1.0)
         line.position = CGPoint(x: size.width / 2, y: size.height + 150)
+        line.yScale = 1 // Начальный масштаб по Y
         addChild(line)
         
         // Setup hook
@@ -143,9 +145,19 @@ class MonstersGameScene: SKScene {
         element.position = CGPoint(x: size.width + element.size.width / 2, y: yPosition)
         addChild(element)
         
+        // Create the horizontal movement action
         let actionMove = SKAction.move(to: CGPoint(x: -element.size.width / 2, y: element.position.y), duration: TimeInterval(CGFloat.random(in: 4.0...6.0)))
+        actionMove.timingMode = .easeInEaseOut
+        
+        // Create the rotation action
+        let rotationDuration = CGFloat.random(in: 2.0...4.0)
+        let rotateAction = SKAction.rotate(byAngle: .pi * 2, duration: TimeInterval(rotationDuration))
+        
+        // Combine movement and rotation
+        let moveAndRotate = SKAction.group([actionMove, SKAction.repeatForever(rotateAction)])
+        
         let actionRemove = SKAction.removeFromParent()
-        element.run(SKAction.sequence([actionMove, actionRemove]))
+        element.run(SKAction.sequence([moveAndRotate, actionRemove]))
     }
 
     func generateElementYPosition(for element: SKSpriteNode) -> CGFloat {
@@ -185,22 +197,37 @@ class MonstersGameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if !isHookMovingDown {
             isHookMovingDown = true
-            let moveDown = SKAction.run { [unowned self] in
-                self.line.yScale = 5.0
-                self.hook.position = CGPoint(x: self.hook.position.x, y: self.size.height - self.line.size.height * 5)
-            }
-            let wait = SKAction.wait(forDuration: 0.5)
+            
+            let hookMoveDown = SKAction.moveTo(y: self.size.height - self.line.size.height * 5, duration: 0.3)
+            let lineMoveDown = SKAction.scaleY(to: 5, duration: 0.3)
+            
+            hookMoveDown.timingMode = .easeInEaseOut
+            lineMoveDown.timingMode = .easeInEaseOut
+            
+            let wait = SKAction.wait(forDuration: 0.1)
+            
             let checkCollision = SKAction.run { [unowned self] in
                 self.checkHookCollision()
             }
-            let moveUp = SKAction.run { [unowned self] in
-                self.line.yScale = 1.0
-                self.hook.position = CGPoint(x: self.hook.position.x, y: self.hookPositionY)
+            
+            let hookMoveUp = SKAction.moveTo(y: self.hookPositionY, duration: 0.15)
+            let lineMoveUp = SKAction.scaleY(to: 1, duration: 0.15)
+            
+            hookMoveUp.timingMode = .easeInEaseOut
+            lineMoveUp.timingMode = .easeInEaseOut
+            
+            let resetHook = SKAction.run { [unowned self] in
                 self.isHookMovingDown = false
             }
-            hook.run(SKAction.sequence([moveDown, wait, checkCollision, moveUp]))
+            
+            let hookSequence = SKAction.sequence([hookMoveDown, wait, checkCollision, hookMoveUp, resetHook])
+            let lineSequence = SKAction.sequence([lineMoveDown, wait, lineMoveUp])
+            
+            hook.run(hookSequence)
+            line.run(lineSequence)
         }
     }
+
 
     func checkHookCollision() {
         for element in children where element != hook && element != line && element.name != "background" && element.frame.intersects(hook.frame) {
@@ -255,6 +282,8 @@ class MonstersGameScene: SKScene {
         setupScene()
     }
 }
+
+
 
 struct MonstersGameView: View {
     // MARK: - Property -
